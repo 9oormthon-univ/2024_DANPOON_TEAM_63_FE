@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/youthSpaceListFragment"
+        android:title="청년 공간"
+        android:icon="@drawable/ic_youth_space"/>
+    <item android:id="@+id/amenitiesListFragment"
+        android:title="주변 시설"
+        android:icon="@drawable/ic_surrounding_map"/>
+    <item android:id="@+id/spaceReservationFragment"
+        android:title="공간 예약"
+        android:icon="@drawable/ic_reservation"/>
+</menu>

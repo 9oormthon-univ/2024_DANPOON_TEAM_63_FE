@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/youthSpaceListFragment">
+
+    <fragment
+        android:id="@+id/youthSpaceListFragment"
+        android:name="com.example.youthspacefinder.YouthSpace.YouthSpaceListFragment"
+        android:label="fragment_youth_space_list"
+        tools:layout="@layout/fragment_youth_space_list" >
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_amenitiesListFragment"
+            app:destination="@id/amenitiesListFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_spaceReservationFragment"
+            app:destination="@id/spaceReservationFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_recommendSorroundingYouthSpaceFragment"
+            app:destination="@id/recommendSurroundingYouthSpaceFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/youthSpaceDetailFragment"
+        android:name="com.example.youthspacefinder.YouthSpace.YouthSpaceDetailFragment"
+        android:label="fragment_youth_space_detail"
+        tools:layout="@layout/fragment_youth_space_detail" >
+        <action
+            android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/spaceReservationFragment"
+        android:name="com.example.youthspacefinder.Reservation.SpaceReservationFragment"
+        android:label="fragment_space_reservation"
+        tools:layout="@layout/fragment_space_reservation" />
+    <fragment
+        android:id="@+id/amenitiesListFragment"
+        android:name="com.example.youthspacefinder.Surroundings.AmenitiesListFragment"
+        android:label="fragment_amenities_list"
+        tools:layout="@layout/fragment_amenities_list" >
+        <action
+            android:id="@+id/action_amenitiesListFragment_to_amenitiesRouteGuideFragment"
+            app:destination="@id/amenitiesRouteGuideFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/amenitiesRouteGuideFragment"
+        android:name="com.example.youthspacefinder.Surroundings.AmenitiesRouteGuideFragment"
+        android:label="fragment_amenities_route_guide"
+        tools:layout="@layout/fragment_amenities_route_guide" >
+        <action
+            android:id="@+id/action_amenitiesRouteGuideFragment_to_amenitiesListFragment"
+            app:destination="@id/amenitiesListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/recommendSurroundingYouthSpaceFragment"
+        android:name="com.example.youthspacefinder.YouthSpace.RecommendSurroundingYouthSpaceFragment"
+        android:label="fragment_recommend_sorrounding_youth_space"
+        tools:layout="@layout/fragment_recommend_sorrounding_youth_space" >
+        <action
+            android:id="@+id/action_recommendSurroundingYouthSpaceFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
+    </fragment>
+
+</navigation>
