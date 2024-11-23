@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceListFragment"
             app:destination="@id/youthSpaceListFragment" />
+        <action
+            android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment"
+            app:destination="@id/youthSpaceKaKaoMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/spaceReservationFragment"
@@ -78,6 +81,14 @@
         <action
             android:id="@+id/action_amenitiesDetailFragment_to_amenitiesListFragment"
             app:destination="@id/amenitiesListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youthSpaceKaKaoMapFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceKaKaoMapFragment"
+        android:label="YouthSpaceKaKaoMapFragment" >
+        <action
+            android:id="@+id/action_youthSpaceKaKaoMapFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
     </fragment>
 
 </navigation>

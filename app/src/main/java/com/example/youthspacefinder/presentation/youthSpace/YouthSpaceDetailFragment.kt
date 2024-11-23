@@ -57,5 +57,11 @@ class YouthSpaceDetailFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceListFragment)
         }
+        binding.btnSearchSurroundingAmenities.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment)
+        }
+        binding.btnGoToUrl.setOnClickListener {
+            // WebView (나중에)
+        }
     }
 }
