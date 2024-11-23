@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_amenitiesDetailFragment_to_youthSpaceKaKaoMapFragment"
             app:destination="@id/youthSpaceKaKaoMapFragment" />
+        <action
+            android:id="@+id/action_amenitiesDetailFragment_to_amenitiesWebViewFragment"
+            app:destination="@id/amenitiesWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/youthSpaceKaKaoMapFragment"
@@ -83,6 +86,14 @@
         <action
             android:id="@+id/action_youthSpaceDefineFragment_to_youthSpaceListFragment"
             app:destination="@id/youthSpaceListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/amenitiesWebViewFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesWebViewFragment"
+        android:label="AmenitiesWebViewFragment" >
+        <action
+            android:id="@+id/action_amenitiesWebViewFragment_to_amenitiesDetailFragment"
+            app:destination="@id/amenitiesDetailFragment" />
     </fragment>
 
 </navigation>

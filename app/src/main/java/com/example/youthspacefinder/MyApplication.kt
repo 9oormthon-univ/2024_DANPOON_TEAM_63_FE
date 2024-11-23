@@ -7,7 +7,7 @@ import com.kakao.vectormap.KakaoMapSdk
 class MyApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        KakaoSdk.init(this, utils.KAKAO_MAP_KEY)
-        KakaoMapSdk.init(this, utils.KAKAO_MAP_KEY)
+//        KakaoSdk.init(this, utils.KAKAO_MAP_KEY)
+//        KakaoMapSdk.init(this, utils.KAKAO_MAP_KEY)
     }
 }

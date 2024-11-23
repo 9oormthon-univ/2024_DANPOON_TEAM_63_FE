@@ -24,6 +24,7 @@ class YouthSpaceWebViewActivity : AppCompatActivity() {
             insets
         }
         val homepageUrl = intent.getStringExtra("homepage_url")
+        Log.d("url", homepageUrl!!)
         binding.webView.loadUrl(homepageUrl!!)
 
         binding.webView.apply {

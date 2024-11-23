@@ -14,8 +14,10 @@ import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
+import com.example.youthspacefinder.utils
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
 import retrofit2.Call
@@ -52,7 +54,6 @@ class YouthSpaceDetailFragment : Fragment() {
                     val response = response.body()!!
                     val positionX = response.positionX
                     val positionY = response.positionY
-
                 }
             }
 
@@ -82,16 +83,13 @@ class YouthSpaceDetailFragment : Fragment() {
 //            tvSpcCost.text = spcCost
 //            tvFoodYn.text = foodYn
         }
-//        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
-        val mapView = MapView(requireContext())
-        binding.mapView.addView(mapView)
         showMapView()
     }
 
 
     private fun showMapView() {
         // KakaoMapSDK 초기화!!
-//        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
+        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출

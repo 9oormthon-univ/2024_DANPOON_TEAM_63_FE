@@ -3,16 +3,20 @@ package com.example.youthspacefinder.presentation.surroundings
 import AmenitiesResponse
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youthspacefinder.R
 
 class AmenitiesListDetailAdapter(
     val amenityItems: List<AmenitiesResponse>,
-    val context: Context
+    val context: Context,
+    val navController: NavController
 ): RecyclerView.Adapter<AmenitiesListDetailAdapter.AmenitiesListDetailViewHolder>() {
     inner class AmenitiesListDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val amenityName: TextView
@@ -40,9 +44,11 @@ class AmenitiesListDetailAdapter(
         holder.amenityPhoneNumber.text = amenityItems[position].phoneNumber
         holder.amenityDistance.text = "${amenityItems[position].distance}m"
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, AmenitiesWebViewActivity::class.java)
-            intent.putExtra("hompage_url", amenityItems[position].placeUrl)
-            context.startActivity(intent)
+            val bundle = bundleOf("homepage_url" to amenityItems[position].placeUrl)
+            navController.navigate(R.id.action_amenitiesDetailFragment_to_amenitiesWebViewFragment, bundle)
+//            val intent = Intent(context, AmenitiesWebViewActivity::class.java)
+//            intent.putExtra("homepage_url", amenityItems[position].placeUrl)
+//            context.startActivity(intent)
         }
     }
 }

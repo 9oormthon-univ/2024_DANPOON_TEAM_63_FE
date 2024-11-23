@@ -38,7 +38,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
 
     private fun showMapView() {
         // KakaoMapSDK 초기화!!
-//        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
+        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출

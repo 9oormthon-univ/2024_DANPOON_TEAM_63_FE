@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentAmenitiesDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
@@ -36,7 +37,8 @@ class AmenitiesDetailFragment : Fragment() {
             ) {
                 if(response.isSuccessful) {
                     val response = response.body()!!
-                    binding.recylerview.adapter = AmenitiesListDetailAdapter(response, requireContext())
+                    val navController = findNavController()
+                    binding.recylerview.adapter = AmenitiesListDetailAdapter(response, requireContext(),navController )
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
