@@ -62,6 +62,8 @@ dependencies {
     implementation("com.tickaroo.tikxml:annotation:0.8.13")
     implementation("com.tickaroo.tikxml:core:0.8.13")
     implementation("com.tickaroo.tikxml:retrofit-converter:0.8.13")
+    // circle image view
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     kapt("com.tickaroo.tikxml:processor:0.8.13")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
