@@ -1,7 +1,9 @@
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml
+import kotlinx.parcelize.Parcelize
 
 @Xml(name = "spacesInfo")
 data class SpacesInfoResponse(
@@ -72,10 +74,11 @@ data class YouthSpace(
     val foodYn: String
 )
 
+@Parcelize
 data class AmenitiesResponse(
     @SerializedName("place_name") val amenityName: String,
     @SerializedName("phone") val phoneNumber: String,
     @SerializedName("place_url") val placeUrl: String,
     @SerializedName("x") val positionX: String,
     @SerializedName("y") val positionY: String
-)
+): Parcelable

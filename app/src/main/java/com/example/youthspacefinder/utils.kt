@@ -2,6 +2,7 @@ package com.example.youthspacefinder
 
 object utils {
     val apiKey = "c14e93888cd4550be04afd95"
+    const val KAKAO_MAP_KEY = "180c35829c0fc44b28b5517acfe31145"
     val regionCode = mapOf(
         "서울" to "003002001",
         "부산" to "003002002",

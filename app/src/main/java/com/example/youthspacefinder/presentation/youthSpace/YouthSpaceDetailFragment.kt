@@ -1,10 +1,12 @@
 package com.example.youthspacefinder.presentation.youthSpace
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
@@ -58,10 +60,16 @@ class YouthSpaceDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceListFragment)
         }
         binding.btnSearchSurroundingAmenities.setOnClickListener {
-            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment)
+            val bundle = bundleOf(
+                "youth_space_name" to binding.tvSpcName.text.toString(),
+                "youth_space_address" to binding.tvAddress.text.toString()
+            )
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment, bundle)
         }
         binding.btnGoToUrl.setOnClickListener {
-            // WebView (나중에)
+            val intent = Intent(requireContext(), YouthSpaceWebViewActivity::class.java)
+            intent.putExtra("homepage_url", requireArguments().getString("homepage"))
+            startActivity(intent)
         }
     }
 }

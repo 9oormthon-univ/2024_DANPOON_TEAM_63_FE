@@ -1,17 +1,21 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("kotlin-parcelize")
     kotlin("kapt")
+}
+
+val properties = Properties().apply {
+    load(FileInputStream(rootProject.file("local.properties")))
 }
 
 android {
     namespace = "com.example.youthspacefinder"
     compileSdk = 34
-
-    buildFeatures {
-        viewBinding = true
-    }
 
     defaultConfig {
         applicationId = "com.example.youthspacefinder"
@@ -19,8 +23,13 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "KAKAO_MAP_KEY", properties.getProperty("KAKAO_MAP_KEY"))
+    }
+
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
     }
 
     buildTypes {
@@ -65,6 +74,8 @@ dependencies {
     // circle image view
     implementation("de.hdodenhof:circleimageview:3.1.0")
     kapt("com.tickaroo.tikxml:processor:0.8.13")
+    // kakao map api
+    implementation("com.kakao.maps.open:android:2.9.5")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

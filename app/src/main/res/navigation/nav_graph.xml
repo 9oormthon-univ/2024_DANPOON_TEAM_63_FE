@@ -89,6 +89,18 @@
         <action
             android:id="@+id/action_youthSpaceKaKaoMapFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
+        <action
+            android:id="@+id/action_youthSpaceKaKaoMapFragment_to_amenitiesKaKaoMapFragment"
+            app:destination="@id/amenitiesKaKaoMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/amenitiesKaKaoMapFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesKaKaoMapFragment"
+        android:label="fragment_amenities_ka_kao_map"
+        tools:layout="@layout/fragment_amenities_ka_kao_map" >
+        <action
+            android:id="@+id/action_amenitiesKaKaoMapFragment_to_youthSpaceKaKaoMapFragment"
+            app:destination="@id/youthSpaceKaKaoMapFragment" />
     </fragment>
 
 </navigation>

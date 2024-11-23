@@ -45,8 +45,6 @@ class AmenitiesDetailFragment : Fragment() {
             override fun onFailure(call: Call<List<AmenitiesResponse>>, t: Throwable) {
                 Log.e("API_FAILURE", "Failure: ${t.message}")
             }
-
         })
     }
-
 }
