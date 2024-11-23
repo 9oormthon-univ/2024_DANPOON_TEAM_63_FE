@@ -4,22 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".presentation.youthSpace.YouthSpaceDetailFragment">
 
+    <ImageView
+        android:id="@+id/iv_spcImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="10dp"/>
     <TextView
+        android:id="@+id/tv_spcName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:textSize="20sp"
-        android:layout_marginBottom="20dp"
-        android:text="공간별 상세 정보 제공(이용 가능 시간, 제공 서비스, 예약 방법, 이용료)" />
+        android:layout_marginBottom="10dp"
+        android:text="시설이름"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="주소"/>
+
+    <TextView
+        android:id="@+id/tv_spcTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="운영시간"/>
+
+    <TextView
+        android:id="@+id/tv_operOrgan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="운영기관"/>
+
+    <TextView
+        android:id="@+id/tv_homepage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="홈페이지"/>
+
+    <TextView
+        android:id="@+id/tv_telNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="전화번호"/>
+
+    <TextView
+        android:id="@+id/tv_openDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="설립시기"/>
+
+    <TextView
+        android:id="@+id/tv_applyTarget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="타겟층"/>
+
+    <TextView
+        android:id="@+id/tv_spcCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="공간사용료 유무"/>
+
+    <TextView
+        android:id="@+id/tv_foodYn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:text="식음료제공유무"/>
 
     <Button
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="돌아가기"/>
 
 </LinearLayout>

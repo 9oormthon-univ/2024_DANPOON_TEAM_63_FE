@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
@@ -28,10 +30,6 @@ class YouthSpaceListAdapter(
             spaceName = itemView.findViewById(R.id.tv_youth_space_name)
             spaceAddress = itemView.findViewById(R.id.tv_youth_space_address)
             spaceOperateTime = itemView.findViewById(R.id.tv_youth_space_time)
-
-            itemView.setOnClickListener {
-
-            }
         }
     }
 
@@ -50,5 +48,23 @@ class YouthSpaceListAdapter(
         holder.spaceName.text = youthYouthSpaceItems[position].spcName
         holder.spaceAddress.text = youthYouthSpaceItems[position].address
         holder.spaceOperateTime.text = youthYouthSpaceItems[position].officeHours
+
+        holder.itemView.setOnClickListener { view ->
+            val bundle = bundleOf(
+                "spcImage" to randomImage,
+                "spcName" to youthYouthSpaceItems[position].spcName,
+                "address" to youthYouthSpaceItems[position].address,
+                "spcTime" to youthYouthSpaceItems[position].spcTime,
+                "operOrgan" to youthYouthSpaceItems[position].operOrgan,
+                "homepage" to youthYouthSpaceItems[position].homepage,
+                "telNo" to youthYouthSpaceItems[position].telNo,
+                "openDate" to youthYouthSpaceItems[position].openDate,
+                "applyTarget" to youthYouthSpaceItems[position].applyTarget,
+                "spcCost" to youthYouthSpaceItems[position].spcCost,
+                "foodYn" to youthYouthSpaceItems[position].foodYn
+            )
+            view.findNavController()
+                .navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment, bundle)
+        }
     }
 }
