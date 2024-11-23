@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.Reservation
+package com.example.youthspacefinder.presentation.reservation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

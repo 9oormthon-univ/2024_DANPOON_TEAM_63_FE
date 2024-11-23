@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/youthSpaceListFragment"
-        android:name="com.example.youthspacefinder.YouthSpace.YouthSpaceListFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceListFragment"
         android:label="fragment_youth_space_list"
         tools:layout="@layout/fragment_youth_space_list" >
         <action
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/youthSpaceDetailFragment"
-        android:name="com.example.youthspacefinder.YouthSpace.YouthSpaceDetailFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceDetailFragment"
         android:label="fragment_youth_space_detail"
         tools:layout="@layout/fragment_youth_space_detail" >
         <action
@@ -35,12 +35,12 @@
     </fragment>
     <fragment
         android:id="@+id/spaceReservationFragment"
-        android:name="com.example.youthspacefinder.Reservation.SpaceReservationFragment"
+        android:name="com.example.youthspacefinder.presentation.reservation.SpaceReservationFragment"
         android:label="fragment_space_reservation"
         tools:layout="@layout/fragment_space_reservation" />
     <fragment
         android:id="@+id/amenitiesListFragment"
-        android:name="com.example.youthspacefinder.Surroundings.AmenitiesListFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesListFragment"
         android:label="fragment_amenities_list"
         tools:layout="@layout/fragment_amenities_list" >
         <action
@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/amenitiesRouteGuideFragment"
-        android:name="com.example.youthspacefinder.Surroundings.AmenitiesRouteGuideFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesRouteGuideFragment"
         android:label="fragment_amenities_route_guide"
         tools:layout="@layout/fragment_amenities_route_guide" >
         <action
@@ -60,7 +60,7 @@
 
     <fragment
         android:id="@+id/recommendSurroundingYouthSpaceFragment"
-        android:name="com.example.youthspacefinder.YouthSpace.RecommendSurroundingYouthSpaceFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.RecommendSurroundingYouthSpaceFragment"
         android:label="fragment_recommend_sorrounding_youth_space"
         tools:layout="@layout/fragment_recommend_sorrounding_youth_space" >
         <action

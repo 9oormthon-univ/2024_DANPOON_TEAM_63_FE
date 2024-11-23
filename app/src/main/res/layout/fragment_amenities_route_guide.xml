@@ -6,7 +6,7 @@
     android:gravity="center_horizontal"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context=".Surroundings.AmenitiesRouteGuideFragment">
+    tools:context=".presentation.surroundings.AmenitiesRouteGuideFragment">
 
     <TextView
         android:layout_width="wrap_content"

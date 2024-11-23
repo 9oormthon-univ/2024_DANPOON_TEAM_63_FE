@@ -1,17 +1,17 @@
-package com.example.youthspacefinder.YouthSpace
+package com.example.youthspacefinder.presentation.youthSpace
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentRecommendSorroundingYouthSpaceBinding
-import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 
-class YouthSpaceDetailFragment : Fragment() {
-    val binding by lazy { FragmentYouthSpaceDetailBinding.inflate(layoutInflater) }
+class RecommendSurroundingYouthSpaceFragment : Fragment() {
+
+    val binding by lazy { FragmentRecommendSorroundingYouthSpaceBinding.inflate(layoutInflater) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +27,7 @@ class YouthSpaceDetailFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceListFragment)
+            findNavController().navigate(R.id.action_recommendSurroundingYouthSpaceFragment_to_youthSpaceListFragment)
         }
     }
 }
