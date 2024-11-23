@@ -15,7 +15,7 @@
         android:gravity="center"
         android:textSize="20sp"
         android:layout_marginBottom="20dp"
-        android:text="지역(시/도/군)별 청년 공간 목록 조회" />
+        android:text="클릭하면 청년 공간의 상세 정보 확인 가능" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -26,13 +26,6 @@
         android:background="#F0F0F0"
         tools:listitem="@layout/item_youth_space"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
-    <Button
-        android:id="@+id/btn_youth_space_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="공간별 상세 정보 확인"/>
 
     <Button
         android:id="@+id/btn_surrounding_youth_space"

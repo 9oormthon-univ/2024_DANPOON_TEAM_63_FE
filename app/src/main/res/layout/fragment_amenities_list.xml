@@ -4,22 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".presentation.surroundings.AmenitiesListFragment">
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
         android:gravity="center"
+        android:textSize="20sp"
         android:layout_marginBottom="20dp"
-        android:text="청년 공간 주변 음식점, 카페, 대중교통 정보 조회" />
+        android:text="클릭하면 청년 공간의 주변 시설 확인 가능" />
 
-    <Button
-        android:id="@+id/btn_amenities_route_guide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="카카오맵 API 를 활용한 경로 안내"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="30dp"
+        android:background="#F0F0F0"
+        tools:listitem="@layout/item_youth_space"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </LinearLayout>

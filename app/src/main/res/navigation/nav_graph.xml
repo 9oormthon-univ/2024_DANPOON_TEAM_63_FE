@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_amenitiesListFragment_to_amenitiesRouteGuideFragment"
             app:destination="@id/amenitiesRouteGuideFragment" />
+        <action
+            android:id="@+id/action_amenitiesListFragment_to_amenitiesDetailFragment"
+            app:destination="@id/amenitiesDetailFragment" />
     </fragment>
 
     <fragment
@@ -66,6 +69,15 @@
         <action
             android:id="@+id/action_recommendSurroundingYouthSpaceFragment_to_youthSpaceListFragment"
             app:destination="@id/youthSpaceListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/amenitiesDetailFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesDetailFragment"
+        android:label="fragment_amenities_detail"
+        tools:layout="@layout/fragment_amenities_detail" >
+        <action
+            android:id="@+id/action_amenitiesDetailFragment_to_amenitiesListFragment"
+            app:destination="@id/amenitiesListFragment" />
     </fragment>
 
 </navigation>

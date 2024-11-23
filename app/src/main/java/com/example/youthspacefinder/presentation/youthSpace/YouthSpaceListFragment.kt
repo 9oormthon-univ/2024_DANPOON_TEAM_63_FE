@@ -56,9 +56,6 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.btnYouthSpaceDetail.setOnClickListener {
-            findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment)
-        }
         binding.btnSurroundingYouthSpace.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceListFragment_to_recommendSorroundingYouthSpaceFragment)
         }

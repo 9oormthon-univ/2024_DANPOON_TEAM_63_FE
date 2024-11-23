@@ -1,3 +1,4 @@
+import com.google.gson.annotations.SerializedName
 import com.tickaroo.tikxml.annotation.Element
 import com.tickaroo.tikxml.annotation.PropertyElement
 import com.tickaroo.tikxml.annotation.Xml
@@ -69,4 +70,12 @@ data class YouthSpace(
 
     @PropertyElement(name = "foodYn")
     val foodYn: String
+)
+
+data class AmenitiesResponse(
+    @SerializedName("place_name") val amenityName: String,
+    @SerializedName("phone") val phoneNumber: String,
+    @SerializedName("place_url") val placeUrl: String,
+    @SerializedName("x") val positionX: String,
+    @SerializedName("y") val positionY: String
 )
