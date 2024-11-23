@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/iv_map"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
         android:src="@drawable/bg_map_temp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
