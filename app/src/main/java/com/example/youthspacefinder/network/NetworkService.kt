@@ -1,6 +1,7 @@
 package com.example.youthspacefinder.network
 
 import AmenitiesResponse
+import PositionResponse
 import SpacesInfoResponse
 import retrofit2.Call
 import retrofit2.http.GET
@@ -17,4 +18,9 @@ interface NetworkService {
     fun getAmenitiesList(
         @Query("address") address: String
     ): Call<List<AmenitiesResponse>>
+
+    @GET("search-position")
+    fun getLocationXY(
+        @Query("address") address: String
+    ): Call<PositionResponse>
 }

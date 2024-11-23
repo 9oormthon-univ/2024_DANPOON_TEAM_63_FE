@@ -27,7 +27,7 @@ class AmenitiesRouteGuideFragment : Fragment() {
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_amenitiesRouteGuideFragment_to_amenitiesListFragment)
+
         }
     }
 }

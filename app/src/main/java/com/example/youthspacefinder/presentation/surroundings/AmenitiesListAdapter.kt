@@ -48,11 +48,5 @@ class AmenitiesListAdapter(
         holder.spaceName.text = youthYouthSpaceItems[position].spcName
         holder.spaceAddress.text = youthYouthSpaceItems[position].address
         holder.spaceOperateTime.text = youthYouthSpaceItems[position].officeHours
-
-        holder.itemView.setOnClickListener { view ->
-            val bundle = bundleOf("address" to youthYouthSpaceItems[position].address)
-            view.findNavController()
-                .navigate(R.id.action_amenitiesListFragment_to_amenitiesDetailFragment, bundle)
-        }
     }
 }

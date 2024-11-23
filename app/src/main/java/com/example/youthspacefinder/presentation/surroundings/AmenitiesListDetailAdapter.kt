@@ -2,6 +2,7 @@ package com.example.youthspacefinder.presentation.surroundings
 
 import AmenitiesResponse
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,16 +17,12 @@ class AmenitiesListDetailAdapter(
     inner class AmenitiesListDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val amenityName: TextView
         val amenityPhoneNumber: TextView
-        val amenityUrl: TextView
-        val amenityPositionX: TextView
-        val amenityPositionY: TextView
+        val amenityDistance: TextView
 
         init {
             amenityName = itemView.findViewById(R.id.tv_amenity_name)
             amenityPhoneNumber = itemView.findViewById(R.id.tv_amenity_phone_number)
-            amenityUrl = itemView.findViewById(R.id.tv_amenity_url)
-            amenityPositionX = itemView.findViewById(R.id.tv_amenity_position_x)
-            amenityPositionY = itemView.findViewById(R.id.tv_amenity_position_y)
+            amenityDistance = itemView.findViewById(R.id.tv_distance)
         }
     }
 
@@ -41,9 +38,11 @@ class AmenitiesListDetailAdapter(
     override fun onBindViewHolder(holder: AmenitiesListDetailViewHolder, position: Int) {
         holder.amenityName.text = amenityItems[position].amenityName
         holder.amenityPhoneNumber.text = amenityItems[position].phoneNumber
-        holder.amenityUrl.text = amenityItems[position].placeUrl
-        holder.amenityPositionX.text = amenityItems[position].positionX
-        holder.amenityPositionY.text = amenityItems[position].positionY
-        holder.itemView.setOnClickListener { }
+        holder.amenityDistance.text = "${amenityItems[position].distance}m"
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, AmenitiesWebViewActivity::class.java)
+            intent.putExtra("hompage_url", amenityItems[position].placeUrl)
+            context.startActivity(intent)
+        }
     }
 }

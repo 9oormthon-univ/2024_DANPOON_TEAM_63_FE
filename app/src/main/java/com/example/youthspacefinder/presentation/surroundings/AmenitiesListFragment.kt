@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentAmenitiesListBinding
-import com.example.youthspacefinder.databinding.FragmentYouthSpaceListBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.youthSpace.YouthSpaceListAdapter
 import com.example.youthspacefinder.utils

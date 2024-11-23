@@ -11,9 +11,6 @@
         android:label="fragment_youth_space_list"
         tools:layout="@layout/fragment_youth_space_list" >
         <action
-            android:id="@+id/action_youthSpaceListFragment_to_amenitiesListFragment"
-            app:destination="@id/amenitiesListFragment" />
-        <action
             android:id="@+id/action_youthSpaceListFragment_to_spaceReservationFragment"
             app:destination="@id/spaceReservationFragment" />
         <action
@@ -22,6 +19,9 @@
         <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDefineFragment"
+            app:destination="@id/youthSpaceDefineFragment" />
     </fragment>
 
     <fragment
@@ -45,24 +45,7 @@
         android:id="@+id/amenitiesListFragment"
         android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesListFragment"
         android:label="fragment_amenities_list"
-        tools:layout="@layout/fragment_amenities_list" >
-        <action
-            android:id="@+id/action_amenitiesListFragment_to_amenitiesRouteGuideFragment"
-            app:destination="@id/amenitiesRouteGuideFragment" />
-        <action
-            android:id="@+id/action_amenitiesListFragment_to_amenitiesDetailFragment"
-            app:destination="@id/amenitiesDetailFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/amenitiesRouteGuideFragment"
-        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesRouteGuideFragment"
-        android:label="fragment_amenities_route_guide"
-        tools:layout="@layout/fragment_amenities_route_guide" >
-        <action
-            android:id="@+id/action_amenitiesRouteGuideFragment_to_amenitiesListFragment"
-            app:destination="@id/amenitiesListFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_amenities_list" />
 
     <fragment
         android:id="@+id/recommendSurroundingYouthSpaceFragment"
@@ -79,8 +62,8 @@
         android:label="fragment_amenities_detail"
         tools:layout="@layout/fragment_amenities_detail" >
         <action
-            android:id="@+id/action_amenitiesDetailFragment_to_amenitiesListFragment"
-            app:destination="@id/amenitiesListFragment" />
+            android:id="@+id/action_amenitiesDetailFragment_to_youthSpaceKaKaoMapFragment"
+            app:destination="@id/youthSpaceKaKaoMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/youthSpaceKaKaoMapFragment"
@@ -90,17 +73,16 @@
             android:id="@+id/action_youthSpaceKaKaoMapFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
         <action
-            android:id="@+id/action_youthSpaceKaKaoMapFragment_to_amenitiesKaKaoMapFragment"
-            app:destination="@id/amenitiesKaKaoMapFragment" />
+            android:id="@+id/action_youthSpaceKaKaoMapFragment_to_amenitiesDetailFragment"
+            app:destination="@id/amenitiesDetailFragment" />
     </fragment>
     <fragment
-        android:id="@+id/amenitiesKaKaoMapFragment"
-        android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesKaKaoMapFragment"
-        android:label="fragment_amenities_ka_kao_map"
-        tools:layout="@layout/fragment_amenities_ka_kao_map" >
+        android:id="@+id/youthSpaceDefineFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceDefineFragment"
+        android:label="YouthSpaceDefineFragment" >
         <action
-            android:id="@+id/action_amenitiesKaKaoMapFragment_to_youthSpaceKaKaoMapFragment"
-            app:destination="@id/youthSpaceKaKaoMapFragment" />
+            android:id="@+id/action_youthSpaceDefineFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
     </fragment>
 
 </navigation>

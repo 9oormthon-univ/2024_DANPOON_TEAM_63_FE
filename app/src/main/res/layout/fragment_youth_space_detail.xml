@@ -7,14 +7,13 @@
     android:gravity="center_horizontal"
     tools:context=".presentation.youthSpace.YouthSpaceDetailFragment">
 
-    <ImageView
-        android:id="@+id/iv_map"
+    <com.kakao.vectormap.MapView
+        android:id="@+id/map_view"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:src="@drawable/bg_map_temp"
-        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_spcImage"
@@ -40,7 +39,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_map">
+        app:layout_constraintTop_toBottomOf="@id/map_view">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

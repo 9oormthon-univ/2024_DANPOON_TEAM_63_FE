@@ -79,6 +79,12 @@ data class AmenitiesResponse(
     @SerializedName("place_name") val amenityName: String,
     @SerializedName("phone") val phoneNumber: String,
     @SerializedName("place_url") val placeUrl: String,
+    @SerializedName("distance") val distance: String,
     @SerializedName("x") val positionX: String,
     @SerializedName("y") val positionY: String
 ): Parcelable
+
+data class PositionResponse(
+    @SerializedName("x") val positionX: String,
+    @SerializedName("y") val positionY: String
+)

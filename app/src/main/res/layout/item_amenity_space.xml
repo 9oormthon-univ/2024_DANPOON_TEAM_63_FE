@@ -3,7 +3,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="110dp"
     android:layout_marginBottom="16dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="6dp"
@@ -17,30 +17,35 @@
             android:id="@+id/tv_amenity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp"
+            android:textSize="20sp"
             android:text="편의시설 이름" />
 
         <TextView
             android:id="@+id/tv_amenity_phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="편의시설 전화번호" />
 
         <TextView
-            android:id="@+id/tv_amenity_url"
+            android:id="@+id/tv_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="편의시설 url" />
+            android:text="120m" />
 
-        <TextView
-            android:id="@+id/tv_amenity_position_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="편의시설 x 위치" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_amenity_position_x"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="편의시설 x 위치" />-->
 
-        <TextView
-            android:id="@+id/tv_amenity_position_y"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="편의시설 y 위치" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_amenity_position_y"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="편의시설 y 위치" />-->
     </LinearLayout>
 </androidx.cardview.widget.CardView>
