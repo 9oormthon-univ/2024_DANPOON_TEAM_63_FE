@@ -7,12 +7,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
-import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentAmenitiesListBinding
 import com.example.youthspacefinder.network.RetrofitInstance
-import com.example.youthspacefinder.presentation.youthSpace.YouthSpaceListAdapter
-import com.example.youthspacefinder.utils
+import com.example.youthspacefinder.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +30,7 @@ class AmenitiesListFragment : Fragment() {
     }
 
     private fun networking() {
-        RetrofitInstance.networkService.getYouthSpaceList(utils.apiKey, utils.regionCode["서울"]!!)
+        RetrofitInstance.networkService.getYouthSpaceList(Utils.YOUTH_OPEN_API_KEY, Utils.regionCode["서울"]!!)
             .enqueue(object : Callback<SpacesInfoResponse> {
                 override fun onResponse(
                     call: Call<SpacesInfoResponse>,

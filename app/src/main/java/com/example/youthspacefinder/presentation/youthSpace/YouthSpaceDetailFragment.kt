@@ -14,12 +14,13 @@ import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
-import com.example.youthspacefinder.utils
+import com.example.youthspacefinder.Utils
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
-import com.kakao.vectormap.KakaoMapSdk
+import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
-import com.kakao.vectormap.MapView
+import com.kakao.vectormap.camera.CameraUpdateFactory
+import com.kakao.vectormap.label.LabelOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +28,8 @@ import retrofit2.Response
 class YouthSpaceDetailFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceDetailBinding.inflate(layoutInflater) }
     private var kakaoMap: KakaoMap? = null
+    private var positionX: String ?= null
+    private var positionY: String ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +55,10 @@ class YouthSpaceDetailFragment : Fragment() {
             ) {
                 if(response.isSuccessful) {
                     val response = response.body()!!
-                    val positionX = response.positionX
-                    val positionY = response.positionY
+                    positionX = response.positionX
+                    positionY = response.positionY
+//                    Log.d("x,y =" ,"$positionX, $positionY")
+                    showMapView()
                 }
             }
 
@@ -83,13 +88,11 @@ class YouthSpaceDetailFragment : Fragment() {
 //            tvSpcCost.text = spcCost
 //            tvFoodYn.text = foodYn
         }
-        showMapView()
     }
 
 
     private fun showMapView() {
-        // KakaoMapSDK 초기화!!
-        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
+//        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출
@@ -104,9 +107,25 @@ class YouthSpaceDetailFragment : Fragment() {
 
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaomap: KakaoMap) {
+                Log.d("KakaoMap", "onMapReady")
                 kakaoMap = kakaomap
+                setMapContent()
+            }
+
+            override fun getPosition(): LatLng {
+                return LatLng.from(positionY?.toDouble() ?:0.0, positionX?.toDouble() ?:0.0)
+            }
+
+            override fun getZoomLevel(): Int {
+                return 16
             }
         })
+    }
+
+    private fun setMapContent() {
+        val latLng = LatLng.from(positionY!!.toDouble(), positionX!!.toDouble())
+        kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 16))
+        kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }
 
     private fun setupListeners() {
@@ -116,7 +135,9 @@ class YouthSpaceDetailFragment : Fragment() {
         binding.btnSearchSurroundingAmenities.setOnClickListener {
             val bundle = bundleOf(
                 "youth_space_name" to binding.tvSpcName.text.toString(),
-                "youth_space_address" to binding.tvAddress.text.toString()
+                "youth_space_address" to binding.tvAddress.text.toString(),
+                "youth_space_position_x" to positionX,
+                "youth_space_position_y" to positionY
             )
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment, bundle)
         }
@@ -125,5 +146,15 @@ class YouthSpaceDetailFragment : Fragment() {
             intent.putExtra("homepage_url", requireArguments().getString("homepage"))
             startActivity(intent)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.mapView.resume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.mapView.pause()
     }
 }

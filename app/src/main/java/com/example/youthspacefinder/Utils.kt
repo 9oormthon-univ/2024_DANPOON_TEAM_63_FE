@@ -1,8 +1,12 @@
 package com.example.youthspacefinder
 
-object utils {
-    val apiKey = "c14e93888cd4550be04afd95"
-    const val KAKAO_MAP_KEY = "180c35829c0fc44b28b5517acfe31145"
+import com.kakao.vectormap.label.LabelStyle
+import com.kakao.vectormap.label.LabelStyles
+import com.kakao.vectormap.label.LabelTextStyle
+
+object Utils {
+    const val YOUTH_OPEN_API_KEY = BuildConfig.YOUTH_OPEN_API_KEY
+    const val KAKAO_MAP_KEY = BuildConfig.KAKAO_MAP_KEY
     val regionCode = mapOf(
         "서울" to "003002001",
         "부산" to "003002002",
@@ -44,4 +48,18 @@ object utils {
         R.drawable.image_space_19,
         R.drawable.image_space_20
     )
+
+    fun setPinStyle(isSelected: Boolean): LabelStyle {
+        if (isSelected) {
+            // 선택된 핀
+            return LabelStyle.from(
+                R.drawable.ic_pin_selected
+            )
+            // .setTextStyles(20, R.color.black)
+        }
+        return LabelStyle.from(
+            // 기본 핀
+            R.drawable.ic_pin_default
+        )
+    }
 }

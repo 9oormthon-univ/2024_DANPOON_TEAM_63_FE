@@ -5,13 +5,3 @@ plugins {
     kotlin("jvm") version "2.0.20"
     kotlin("plugin.serialization") version "2.0.20"
 }
-
-//allprojects {
-//    repositories {
-//        mavenCentral()
-//        google()
-//        maven {
-//            url = uri("https://devrepo.kakao.com/nexus/content/groups/public/")
-//        }
-//    }
-//}

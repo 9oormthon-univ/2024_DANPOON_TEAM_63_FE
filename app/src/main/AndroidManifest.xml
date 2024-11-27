@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application
         android:name=".MyApplication"
@@ -28,7 +29,12 @@
 
         <meta-data
             android:name="com.kakao.vectormap.KAKAO_MAP_KEY"
-            android:value="180c35829c0fc44b28b5517acfe31145" />
+            android:value="KAKAO_MAP_KEY" />
+
+        <!-- 추가해야하는지 안추가해도되는지 몰라서 주석처리 -->
+<!--        <meta-data-->
+<!--            android:name="com.example.youthspacefinder.YOUTH_OPEN_API_KEY"-->
+<!--            android:value="YOUTH_OPEN_API_KEY"/>-->
 
         <activity
             android:name=".presentation.MainActivity"

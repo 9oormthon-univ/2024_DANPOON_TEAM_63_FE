@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
-import com.example.youthspacefinder.utils
+import com.example.youthspacefinder.Utils
 import kotlin.random.Random
 
 class AmenitiesListAdapter(
@@ -43,7 +41,7 @@ class AmenitiesListAdapter(
     }
 
     override fun onBindViewHolder(holder: AmenitiesListViewHolder, position: Int) {
-        val randomImage = utils.youthSpaceImageList[Random.nextInt(utils.youthSpaceImageList.size)]
+        val randomImage = Utils.youthSpaceImageList[Random.nextInt(Utils.youthSpaceImageList.size)]
         Glide.with(context).load(randomImage).into(holder.spaceImage)
         holder.spaceName.text = youthYouthSpaceItems[position].spcName
         holder.spaceAddress.text = youthYouthSpaceItems[position].address

@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceListBinding
 import com.example.youthspacefinder.network.RetrofitInstance
-import com.example.youthspacefinder.utils
+import com.example.youthspacefinder.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,7 +34,7 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun networking() {
-        RetrofitInstance.networkService.getYouthSpaceList(utils.apiKey, utils.regionCode["서울"]!!)
+        RetrofitInstance.networkService.getYouthSpaceList(Utils.YOUTH_OPEN_API_KEY, Utils.regionCode["서울"]!!)
             .enqueue(object : Callback<SpacesInfoResponse> {
                 override fun onResponse(
                     call: Call<SpacesInfoResponse>,

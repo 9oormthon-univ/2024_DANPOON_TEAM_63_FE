@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#5464AF</color>
-    <color name="secondary">#92D4BA</color>
+    <color name="primary">#5464AF</color> <!-- 정부의 정책 -->
+    <color name="secondary">#63C29D</color> <!-- 청년의 꿈 -->
 </resources>

@@ -26,6 +26,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "KAKAO_MAP_KEY", properties.getProperty("KAKAO_MAP_KEY"))
+        buildConfigField("String", "YOUTH_OPEN_API_KEY", properties.getProperty("YOUTH_OPEN_API_KEY"))
     }
 
     buildFeatures {
@@ -76,7 +77,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     kapt("com.tickaroo.tikxml:processor:0.8.13")
     // kakao map api
-    implementation("com.kakao.maps.open:android:2.12.8")
+    implementation("com.kakao.maps.open:android:2.9.7")
     // 이상하면 지우기
 //    implementation("net.daum.android.map:map-sdk:1.4.0") // 최신 버전 확인 필요
 
