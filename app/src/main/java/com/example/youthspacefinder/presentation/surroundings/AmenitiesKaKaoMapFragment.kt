@@ -3,20 +3,23 @@ package com.example.youthspacefinder.presentation.surroundings
 import AmenitiesResponse
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.youthspacefinder.databinding.FragmentAmenitiesKaKaoMapBinding
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.youthspacefinder.R
 import com.example.youthspacefinder.Utils
+import com.example.youthspacefinder.databinding.FragmentAmenitiesKaKaoMapBinding
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
-import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.camera.CameraUpdateFactory
+import com.kakao.vectormap.label.Label
+import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.LabelOptions
-import java.lang.Exception
 
 class AmenitiesKaKaoMapFragment : Fragment() {
 
@@ -44,7 +47,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
     }
 
     private fun showMapView() {
-        KakaoMapSdk.init(requireContext(), Utils.KAKAO_MAP_KEY)
+//        KakaoMapSdk.init(requireContext(), Utils.KAKAO_MAP_KEY)
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출
@@ -62,22 +65,35 @@ class AmenitiesKaKaoMapFragment : Fragment() {
                 kakaoMap = kakaomap
                 setYouthSpacePosition()
                 amenities!!.forEach {
-                    Log.d("x,y = ","${it.positionX}, ${it.positionY}")
-                    setAmenitiesPosition(it.positionX, it.positionY)
+                    setAmenitiesPosition(it.positionX, it.positionY, it.placeUrl)
                 }
+                setLabelClickListener()
             }
         })
     }
 
     private fun setYouthSpacePosition() {
         val latLng = LatLng.from(youthSpacePositionY!!.toDouble(), youthSpacePositionX!!.toDouble())
-        kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 16))
+        kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 17))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }
 
-    private fun setAmenitiesPosition(positionX: String, positionY: String) {
+    private fun setAmenitiesPosition(positionX: String, positionY: String, amenityUrl: String) {
         val latLng = LatLng.from(positionY.toDouble(), positionX.toDouble())
-        kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(true)))
+        val labelOption = LabelOptions.from(latLng).setStyles(Utils.setPinStyle(true))
+        labelOption.tag = amenityUrl
+        kakaoMap!!.labelManager!!.layer!!.addLabel(labelOption)
+    }
+
+    private fun setLabelClickListener() {
+        kakaoMap!!.setOnLabelClickListener(object : KakaoMap.OnLabelClickListener {
+            override fun onLabelClicked(kakaoMap: KakaoMap?, labelLayer: LabelLayer?, label: Label?) {
+                val url = label?.tag
+                Log.d("url", url!!.toString())
+                val bundle = bundleOf("amenity_url" to url.toString())
+                findNavController().navigate(R.id.action_amenitiesKaKaoMapFragment_to_amenityWebViewFragment, bundle)
+            }
+        })
     }
 
     override fun onResume() {

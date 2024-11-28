@@ -54,8 +54,7 @@ object Utils {
             // 선택된 핀
             return LabelStyle.from(
                 R.drawable.ic_pin_selected
-            )
-            // .setTextStyles(20, R.color.black)
+            ).setTextStyles(20, R.color.black)
         }
         return LabelStyle.from(
             // 기본 핀

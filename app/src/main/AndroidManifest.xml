@@ -20,12 +20,6 @@
         android:theme="@style/Theme.YouthSpaceFinder"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".presentation.surroundings.AmenitiesWebViewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.youthSpace.YouthSpaceWebViewActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.kakao.vectormap.KAKAO_MAP_KEY"

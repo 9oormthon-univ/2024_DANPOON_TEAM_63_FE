@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment"
             app:destination="@id/youthSpaceKaKaoMapFragment" />
+        <action
+            android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment"
+            app:destination="@id/youthSpaceWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/spaceReservationFragment"
@@ -100,6 +103,27 @@
         <action
             android:id="@+id/action_amenitiesKaKaoMapFragment_to_youthSpaceKaKaoMapFragment"
             app:destination="@id/youthSpaceKaKaoMapFragment" />
+        <action
+            android:id="@+id/action_amenitiesKaKaoMapFragment_to_amenityWebViewFragment"
+            app:destination="@id/amenityWebViewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/amenityWebViewFragment"
+        android:name="com.example.youthspacefinder.presentation.surroundings.AmenityWebViewFragment"
+        android:label="fragment_amenity_web_view"
+        tools:layout="@layout/fragment_amenity_web_view" >
+        <action
+            android:id="@+id/action_amenityWebViewFragment_to_amenitiesKaKaoMapFragment"
+            app:destination="@id/amenitiesKaKaoMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youthSpaceWebViewFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceWebViewFragment"
+        android:label="fragment_youth_space_web_view"
+        tools:layout="@layout/fragment_youth_space_web_view" >
+        <action
+            android:id="@+id/action_youthSpaceWebViewFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
     </fragment>
 
 </navigation>

@@ -142,9 +142,8 @@ class YouthSpaceDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment, bundle)
         }
         binding.btnGoToUrl.setOnClickListener {
-            val intent = Intent(requireContext(), YouthSpaceWebViewActivity::class.java)
-            intent.putExtra("homepage_url", requireArguments().getString("homepage"))
-            startActivity(intent)
+            val bundle = bundleOf("youth_space_url" to requireArguments().getString("youth_space_url"))
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment, bundle)
         }
     }
 

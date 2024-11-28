@@ -12,7 +12,7 @@ pluginManagement {
     }
 }
 
-buildscript {  }
+buildscript { }
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -20,7 +20,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven(url = uri("https://devrepo.kakao.com/nexus/repository/kakaomap-releases/"))
-        maven { url = uri("https://devrepo.kakao.com/nexus/content/groups/public/") }
+        maven(url = uri("https://devrepo.kakao.com/nexus/content/groups/public/"))
     }
 }
 
