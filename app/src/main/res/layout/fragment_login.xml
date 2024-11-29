@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#F6F6F6"
+    tools:context=".presentation.authentication.LoginFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="107dp"
+        android:src="@drawable/ic_logo"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인을 해주세요 !"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="63dp"/>
+    <EditText
+        android:id="@+id/et_id"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:hint="ID"
+        android:textColorHint="#D9D9D9"
+        android:backgroundTint="#BFBFBF"
+        android:layout_marginTop="56dp"
+        android:inputType="text"/>
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Password"
+        android:textColorHint="#D9D9D9"
+        android:backgroundTint="#BFBFBF"
+        android:inputType="textPassword"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:text="로그인"
+        android:background="@drawable/bg_login_button"
+        android:textColor="#5464AF"
+        android:textStyle="bold"
+        android:layout_marginTop="110dp"/>
+
+</LinearLayout>
