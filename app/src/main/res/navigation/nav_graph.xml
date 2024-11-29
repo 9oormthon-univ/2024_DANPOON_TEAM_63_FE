@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/youthSpaceListFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/youthSpaceListFragment"
@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDefineFragment"
             app:destination="@id/youthSpaceDefineFragment" />
-        <action
-            android:id="@+id/action_youthSpaceListFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -117,11 +114,11 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_youthSpaceListFragment"
-            app:destination="@id/youthSpaceListFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_youthSpaceListFragment2"
+            app:destination="@id/youthSpaceListFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
