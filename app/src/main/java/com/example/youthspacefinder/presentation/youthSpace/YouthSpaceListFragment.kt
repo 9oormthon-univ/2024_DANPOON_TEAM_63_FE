@@ -59,9 +59,9 @@ class YouthSpaceListFragment : Fragment() {
         binding.imageView.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDefineFragment)
         }
-//        binding.btnSurroundingYouthSpace.setOnClickListener {
-//            findNavController().navigate(R.id.action_youthSpaceListFragment_to_recommendSorroundingYouthSpaceFragment)
-//        }
+        binding.ivUserProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceListFragment_to_loginFragment)
+        }
     }
 
 }

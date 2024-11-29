@@ -14,14 +14,14 @@
             android:id="@+id/action_youthSpaceListFragment_to_spaceReservationFragment"
             app:destination="@id/spaceReservationFragment" />
         <action
-            android:id="@+id/action_youthSpaceListFragment_to_recommendSorroundingYouthSpaceFragment"
-            app:destination="@id/recommendSurroundingYouthSpaceFragment" />
-        <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
         <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDefineFragment"
             app:destination="@id/youthSpaceDefineFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -40,25 +40,11 @@
             app:destination="@id/youthSpaceWebViewFragment" />
     </fragment>
     <fragment
-        android:id="@+id/spaceReservationFragment"
-        android:name="com.example.youthspacefinder.presentation.reservation.SpaceReservationFragment"
-        android:label="fragment_space_reservation"
-        tools:layout="@layout/fragment_space_reservation" />
-    <fragment
         android:id="@+id/amenitiesListFragment"
         android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesListFragment"
         android:label="fragment_amenities_list"
         tools:layout="@layout/fragment_amenities_list" />
 
-    <fragment
-        android:id="@+id/recommendSurroundingYouthSpaceFragment"
-        android:name="com.example.youthspacefinder.presentation.youthSpace.RecommendSurroundingYouthSpaceFragment"
-        android:label="fragment_recommend_sorrounding_youth_space"
-        tools:layout="@layout/fragment_recommend_sorrounding_youth_space" >
-        <action
-            android:id="@+id/action_recommendSurroundingYouthSpaceFragment_to_youthSpaceListFragment"
-            app:destination="@id/youthSpaceListFragment" />
-    </fragment>
     <fragment
         android:id="@+id/amenitiesDetailFragment"
         android:name="com.example.youthspacefinder.presentation.surroundings.AmenitiesDetailFragment"
@@ -124,6 +110,27 @@
         <action
             android:id="@+id/action_youthSpaceWebViewFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.youthspacefinder.presentation.authentication.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.youthspacefinder.presentation.authentication.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
 </navigation>
