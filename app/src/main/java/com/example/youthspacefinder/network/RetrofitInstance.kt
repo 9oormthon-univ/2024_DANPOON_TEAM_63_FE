@@ -6,12 +6,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://www.youthcenter.go.kr/"
-    private const val BASE_URL_BACK_END = "http://43.203.233.143:8080/api/"
+    private const val BASE_URL_OPEN_API = "https://www.youthcenter.go.kr/"
+    private const val BASE_URL_BACK_END = "http://13.125.8.99:8080/"
 
-    val networkService: NetworkService by lazy {
+    val networkServiceOpenAPI: NetworkService by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_OPEN_API)
             .addConverterFactory(TikXmlConverterFactory.create(
                 TikXml.Builder().exceptionOnUnreadXml(false).build()
             ))
@@ -19,7 +19,7 @@ object RetrofitInstance {
             .create(NetworkService::class.java)
     }
 
-    val networkServiceAmenities: NetworkService by lazy {
+    val networkServiceBackEnd: NetworkService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL_BACK_END)
             .addConverterFactory(GsonConverterFactory.create())
