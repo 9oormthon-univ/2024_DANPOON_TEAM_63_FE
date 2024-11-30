@@ -1,10 +1,12 @@
 package com.example.youthspacefinder.presentation
 
+import android.animation.Animator
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -26,6 +28,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+        binding.lottieAnimation.addAnimatorListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {
+                // 애니메이션 시작
+            }
+
+            override fun onAnimationEnd(animation: Animator) {
+                // 애니메이션 종료
+                binding.lottieAnimation.visibility = View.GONE
+            }
+
+            override fun onAnimationCancel(animation: Animator) {
+                // 애니메이션 취소
+            }
+
+            override fun onAnimationRepeat(animation: Animator) {
+                // 애니메이션이 시작된 이후 반복될 때
+            }
+
+        })
 
         getKeyHash().let {
             Log.d("test", "$it")
