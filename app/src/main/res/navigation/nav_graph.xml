@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment"
             app:destination="@id/youthSpaceWebViewFragment" />
+        <action
+            android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceReviewFragment"
+            app:destination="@id/youthSpaceReviewFragment" />
     </fragment>
     <fragment
         android:id="@+id/amenitiesListFragment"
@@ -128,6 +131,15 @@
         <action
             android:id="@+id/action_signUpFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youthSpaceReviewFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.YouthSpaceReviewFragment"
+        android:label="fragment_youth_space_review"
+        tools:layout="@layout/fragment_youth_space_review" >
+        <action
+            android:id="@+id/action_youthSpaceReviewFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
     </fragment>
 
 </navigation>

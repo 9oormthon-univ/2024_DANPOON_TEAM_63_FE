@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_user_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_user_profile_temp" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="홍길동"
+            android:textStyle="bold"
+            android:textColor="#5464AF"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_review_datetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="2024.11.30 오후 5:09"/>
+        <TextView
+            android:id="@+id/tv_review_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="시설이 깔끔하고 정돈되어있고, 다양한 컨텐츠들이 많아서 또 올 것 같습니다."
+            android:textColor="@color/black"/>
+    </LinearLayout>
+</LinearLayout>

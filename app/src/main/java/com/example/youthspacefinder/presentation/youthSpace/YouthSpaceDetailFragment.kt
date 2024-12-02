@@ -1,7 +1,6 @@
 package com.example.youthspacefinder.presentation.youthSpace
 
 import PositionResponse
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -48,7 +47,7 @@ class YouthSpaceDetailFragment : Fragment() {
         val spcImage = requireArguments().getInt("spcImage")
         val spcName = requireArguments().getString("spcName")
         val address = requireArguments().getString("address")
-        RetrofitInstance.networkServiceAmenities.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
+        RetrofitInstance.networkServiceBackEnd.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
             override fun onResponse(
                 call: Call<PositionResponse>,
                 response: Response<PositionResponse>
@@ -129,8 +128,8 @@ class YouthSpaceDetailFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.btnBack.setOnClickListener {
-            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceListFragment)
+        binding.btnUserReviews.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceReviewFragment)
         }
         binding.btnSearchSurroundingAmenities.setOnClickListener {
             val bundle = bundleOf(
