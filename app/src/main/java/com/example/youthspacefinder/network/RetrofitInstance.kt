@@ -1,5 +1,7 @@
 package com.example.youthspacefinder.network
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import retrofit2.Retrofit
@@ -19,10 +21,12 @@ object RetrofitInstance {
             .create(NetworkService::class.java)
     }
 
+    private val lenientGson: Gson = GsonBuilder().setLenient().create()
+
     val networkServiceBackEnd: NetworkService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL_BACK_END)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(lenientGson))
             .build()
             .create(NetworkService::class.java)
     }
