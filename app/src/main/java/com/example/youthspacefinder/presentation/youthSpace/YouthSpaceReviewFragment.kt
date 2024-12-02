@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
+import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceReviewBinding
+import com.example.youthspacefinder.presentation.youthSpace.adapter.YouthSpaceReviewAdapter
 
 class YouthSpaceReviewFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceReviewBinding.inflate(layoutInflater) }
@@ -20,7 +22,12 @@ class YouthSpaceReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
         setupListeners()
+    }
+
+    private fun initView() {
+        binding.recyclerview.adapter = YouthSpaceReviewAdapter(Utils.dummyReviews, requireContext())
     }
 
     private fun setupListeners() {

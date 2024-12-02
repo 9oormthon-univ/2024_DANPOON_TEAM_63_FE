@@ -11,4 +11,5 @@
     <color name="secondary">#63C29D</color> <!-- 청년의 꿈 -->
     <color name="background">#F6F6F6</color> <!-- 앱 배경 색상 -->
     <color name="edittext_hint">#D9D9D9</color>
+    <color name="text_title">#341F1F</color>
 </resources>

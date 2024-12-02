@@ -1,5 +1,6 @@
 package com.example.youthspacefinder
 
+import com.example.youthspacefinder.model.UserReviewInfo
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelTextStyle
@@ -346,6 +347,13 @@ object Utils {
         R.drawable.image_space_18,
         R.drawable.image_space_19,
         R.drawable.image_space_20
+    )
+
+    val dummyReviews = arrayListOf(
+        UserReviewInfo(nickname = "박래환", dateTime = "2024.11.30 오후 5:09", content = "시설이 깔끔하게 정돈되어있고, 다양한 컨텐츠들이 많아서 또 올 것 같습니다."),
+        UserReviewInfo(nickname = "박세영", dateTime = "2024.12.01 오후 3:29", content = "회의실의 모니터가 있어 회의하기 편리했습니다."),
+        UserReviewInfo(nickname = "이건희", dateTime = "2024.12.02 오후 6:49", content = "커피랑 아이스크림이 맛있었어요."),
+        UserReviewInfo(nickname = "이시은", dateTime = "2024.12.03 오전 10:20", content = "직원이 친절해요 ㅎㅎ")
     )
 
     fun setPinStyle(isSelected: Boolean): LabelStyle {
