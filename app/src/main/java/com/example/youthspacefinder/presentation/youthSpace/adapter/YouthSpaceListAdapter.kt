@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.youthSpace
+package com.example.youthspacefinder.presentation.youthSpace.adapter
 
 import YouthSpace
 import android.content.Context
@@ -13,11 +13,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.Utils
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
 import kotlin.random.Random
 
 class YouthSpaceListAdapter(
     val youthYouthSpaceItems: List<YouthSpace>,
-    val context: Context
+    val context: Context,
+    val viewModel: YouthSpaceViewModel
 ) : RecyclerView.Adapter<YouthSpaceListAdapter.YouthSpaceViewHolder>() {
     inner class YouthSpaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val spaceImage: ImageView
@@ -50,21 +52,18 @@ class YouthSpaceListAdapter(
         holder.spaceOperateTime.text = youthYouthSpaceItems[position].officeHours
 
         holder.itemView.setOnClickListener { view ->
-            val bundle = bundleOf(
-                "spcImage" to randomImage,
-                "spcName" to youthYouthSpaceItems[position].spcName,
-                "address" to youthYouthSpaceItems[position].address,
-                "spcTime" to youthYouthSpaceItems[position].spcTime,
-                "operOrgan" to youthYouthSpaceItems[position].operOrgan,
-                "homepage" to youthYouthSpaceItems[position].homepage,
-                "telNo" to youthYouthSpaceItems[position].telNo,
-                "openDate" to youthYouthSpaceItems[position].openDate,
-                "applyTarget" to youthYouthSpaceItems[position].applyTarget,
-                "spcCost" to youthYouthSpaceItems[position].spcCost,
-                "foodYn" to youthYouthSpaceItems[position].foodYn
-            )
-            view.findNavController()
-                .navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment, bundle)
+            viewModel.spaceImage = randomImage
+            viewModel.spaceName = youthYouthSpaceItems[position].spcName
+            viewModel.spaceAddress = youthYouthSpaceItems[position].address
+            viewModel.spaceTime = youthYouthSpaceItems[position].spcTime
+            viewModel.operateOrgan =  youthYouthSpaceItems[position].operOrgan
+            viewModel.homepageUrl = youthYouthSpaceItems[position].homepage
+            viewModel.telephoneNumber = youthYouthSpaceItems[position].telNo
+            viewModel.spaceOpenDate = youthYouthSpaceItems[position].openDate
+            viewModel.applyTarget = youthYouthSpaceItems[position].applyTarget
+            viewModel.spaceCost = youthYouthSpaceItems[position].spcCost
+            viewModel.foodYn = youthYouthSpaceItems[position].foodYn
+            view.findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment)
         }
     }
 }

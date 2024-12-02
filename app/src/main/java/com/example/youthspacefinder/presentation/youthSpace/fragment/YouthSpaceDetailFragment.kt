@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.youthSpace
+package com.example.youthspacefinder.presentation.youthSpace.fragment
 
 import PositionResponse
 import android.os.Bundle
@@ -8,14 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.Utils
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
+import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.camera.CameraUpdateFactory
@@ -26,9 +29,8 @@ import retrofit2.Response
 
 class YouthSpaceDetailFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceDetailBinding.inflate(layoutInflater) }
+    val viewModel: YouthSpaceViewModel by activityViewModels()
     private var kakaoMap: KakaoMap? = null
-    private var positionX: String ?= null
-    private var positionY: String ?= null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,9 +46,11 @@ class YouthSpaceDetailFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val spcImage = requireArguments().getInt("spcImage")
-        val spcName = requireArguments().getString("spcName")
-        val address = requireArguments().getString("address")
+        val address = viewModel.spaceAddress
+        val spcImage = viewModel.spaceImage
+        val spcName = viewModel.spaceName
+        val spcTime = viewModel.spaceTime
+        val telNo = viewModel.telephoneNumber
         RetrofitInstance.networkServiceBackEnd.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
             override fun onResponse(
                 call: Call<PositionResponse>,
@@ -54,8 +58,8 @@ class YouthSpaceDetailFragment : Fragment() {
             ) {
                 if(response.isSuccessful) {
                     val response = response.body()!!
-                    positionX = response.positionX
-                    positionY = response.positionY
+                    viewModel.spacePositionX = response.positionX
+                    viewModel.spacePositionY = response.positionY
 //                    Log.d("x,y =" ,"$positionX, $positionY")
                     showMapView()
                 }
@@ -64,34 +68,19 @@ class YouthSpaceDetailFragment : Fragment() {
             override fun onFailure(call: Call<PositionResponse>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-
         })
-        val spcTime = requireArguments().getString("spcTime")
-//        val operOrgan = requireArguments().getString("operOrgan")
-//        val homepage = requireArguments().getString("homepage")
-        val telNo = requireArguments().getString("telNo")
-//        val openDate = requireArguments().getString("openDate")
-//        val applyTarget = requireArguments().getString("applyTarget")
-//        val spcCost = requireArguments().getString("spcCost")
-//        val foodYn = requireArguments().getString("foodYn")
         binding.apply {
             Glide.with(requireContext()).load(spcImage).into(ivSpcImage)
             tvSpcName.text = spcName
             tvAddress.text = address
             tvSpcTime.text = spcTime
-//            tvOperOrgan.text = operOrgan
-//            tvHomepage.text = homepage
             tvTelNo.text = telNo
-//            tvOpenDate.text = openDate
-//            tvApplyTarget.text = applyTarget
-//            tvSpcCost.text = spcCost
-//            tvFoodYn.text = foodYn
         }
     }
 
 
     private fun showMapView() {
-//        KakaoMapSdk.init(requireContext(), utils.KAKAO_MAP_KEY)
+//        KakaoMapSdk.init(requireContext(), Utils.KAKAO_MAP_KEY)
         binding.mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() {
                 // 지도 API가 정상적으로 종료될 때 호출
@@ -112,7 +101,7 @@ class YouthSpaceDetailFragment : Fragment() {
             }
 
             override fun getPosition(): LatLng {
-                return LatLng.from(positionY?.toDouble() ?:0.0, positionX?.toDouble() ?:0.0)
+                return LatLng.from(viewModel.spacePositionY?.toDouble() ?:0.0, viewModel.spacePositionX?.toDouble() ?:0.0)
             }
 
             override fun getZoomLevel(): Int {
@@ -122,7 +111,7 @@ class YouthSpaceDetailFragment : Fragment() {
     }
 
     private fun setMapContent() {
-        val latLng = LatLng.from(positionY!!.toDouble(), positionX!!.toDouble())
+        val latLng = LatLng.from(viewModel.spacePositionY!!.toDouble(), viewModel.spacePositionX!!.toDouble())
         kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 16))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }
@@ -132,17 +121,10 @@ class YouthSpaceDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceReviewFragment)
         }
         binding.btnSearchSurroundingAmenities.setOnClickListener {
-            val bundle = bundleOf(
-                "youth_space_name" to binding.tvSpcName.text.toString(),
-                "youth_space_address" to binding.tvAddress.text.toString(),
-                "youth_space_position_x" to positionX,
-                "youth_space_position_y" to positionY
-            )
-            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment, bundle)
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment)
         }
         binding.btnGoToUrl.setOnClickListener {
-            val bundle = bundleOf("youth_space_url" to requireArguments().getString("youth_space_url"))
-            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment, bundle)
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment)
         }
     }
 

@@ -1,6 +1,5 @@
-package com.example.youthspacefinder.presentation.surroundings
+package com.example.youthspacefinder.presentation.surroundings.fragment
 
-import AmenitiesResponse
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentAmenitiesKaKaoMapBinding
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -25,9 +26,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
 
     private val binding by lazy { FragmentAmenitiesKaKaoMapBinding.inflate(layoutInflater) }
     private var kakaoMap: KakaoMap? = null
-    private var youthSpacePositionX: String ?= null
-    private var youthSpacePositionY: String ?= null
-    private var amenities: ArrayList<AmenitiesResponse> ?= null
+    val viewModel: YouthSpaceViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,11 +37,6 @@ class AmenitiesKaKaoMapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        amenities = requireArguments().getParcelableArrayList("amenities") // deprecated → 나중에 refactoring 하기
-        youthSpacePositionX = requireArguments().getString("youth_space_position_x")
-        youthSpacePositionY = requireArguments().getString("youth_space_position_y")
-
         showMapView()
     }
 
@@ -64,7 +58,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 kakaoMap = kakaomap
                 setYouthSpacePosition()
-                amenities!!.forEach {
+                viewModel.amenities!!.forEach {
                     setAmenitiesPosition(it.positionX, it.positionY, it.placeUrl)
                 }
                 setLabelClickListener()
@@ -73,7 +67,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
     }
 
     private fun setYouthSpacePosition() {
-        val latLng = LatLng.from(youthSpacePositionY!!.toDouble(), youthSpacePositionX!!.toDouble())
+        val latLng = LatLng.from(viewModel.spacePositionY!!.toDouble(), viewModel.spacePositionX!!.toDouble())
         kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 17))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }
