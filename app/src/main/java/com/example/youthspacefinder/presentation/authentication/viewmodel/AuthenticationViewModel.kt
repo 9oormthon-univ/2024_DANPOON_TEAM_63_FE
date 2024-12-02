@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.authentication
+package com.example.youthspacefinder.presentation.authentication.viewmodel
 
 import androidx.lifecycle.ViewModel
 

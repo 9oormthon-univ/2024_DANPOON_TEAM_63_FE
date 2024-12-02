@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/primary"
-    tools:context=".presentation.surroundings.AmenitiesDetailFragment">
+    tools:context=".presentation.surroundings.fragment.AmenitiesDetailFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylerview"

@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.surroundings
+package com.example.youthspacefinder.presentation.surroundings.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

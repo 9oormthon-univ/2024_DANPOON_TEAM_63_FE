@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.surroundings.AmenityWebViewFragment">
+    tools:context=".presentation.surroundings.fragment.AmenityWebViewFragment">
 
     <WebView
         android:id="@+id/web_view"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".presentation.youthSpace.YouthSpaceReviewFragment">
+    tools:context=".presentation.youthSpace.fragment.YouthSpaceReviewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -54,7 +54,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="28dp"
-        tools:listitem="@layout/item_user_review"/>
+        tools:listitem="@layout/item_user_review"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

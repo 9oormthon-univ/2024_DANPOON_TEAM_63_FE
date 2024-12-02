@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.surroundings
+package com.example.youthspacefinder.presentation.surroundings.adapter
 
 import YouthSpace
 import android.content.Context

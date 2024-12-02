@@ -1,7 +1,6 @@
-package com.example.youthspacefinder.presentation.authentication
+package com.example.youthspacefinder.presentation.authentication.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentLoginBinding
+import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
 
 class LoginFragment : Fragment() {
 
@@ -53,7 +53,7 @@ class LoginFragment : Fragment() {
             } else {
                 // retrofit 서버 통신 + POST
                 Toast.makeText(requireContext(), "환영합니다!", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_loginFragment_to_youthSpaceListFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_youthSpaceListFragment2)
             }
         }
     }

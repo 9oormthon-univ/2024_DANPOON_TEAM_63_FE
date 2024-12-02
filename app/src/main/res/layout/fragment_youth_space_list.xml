@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.youthSpace.YouthSpaceListFragment"
+    tools:context=".presentation.youthSpace.fragment.YouthSpaceListFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,13 +29,14 @@
             app:cardCornerRadius="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_user_profile">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white" />
+                app:iconifiedByDefault="false"
+                app:queryHint="지역, 청년공간 검색"/>
         </androidx.cardview.widget.CardView>
 
         <TextView

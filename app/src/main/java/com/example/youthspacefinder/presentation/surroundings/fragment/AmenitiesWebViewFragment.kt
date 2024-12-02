@@ -1,16 +1,11 @@
-package com.example.youthspacefinder.presentation.surroundings
+package com.example.youthspacefinder.presentation.surroundings.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentAmenitiesWebViewBinding
 
 // TODO: Rename parameter arguments, choose names that match

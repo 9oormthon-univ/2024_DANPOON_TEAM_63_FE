@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.surroundings.AmenitiesKaKaoMapFragment">
+    tools:context=".presentation.surroundings.fragment.AmenitiesKaKaoMapFragment">
     <com.kakao.vectormap.MapView
         android:id="@+id/map_view"
         android:layout_width="match_parent"
