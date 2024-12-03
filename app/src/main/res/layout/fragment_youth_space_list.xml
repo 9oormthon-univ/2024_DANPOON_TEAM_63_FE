@@ -4,9 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/background"
     tools:context=".presentation.youthSpace.fragment.YouthSpaceListFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
+    <!-- [?] LinearLayout 의 배경 색깔만 지정하는데 왜 backgroundTint 는 작동하지 않을까? -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="180dp"

@@ -19,7 +19,8 @@ import kotlin.random.Random
 class YouthSpaceListAdapter(
     val youthYouthSpaceItems: List<YouthSpace>,
     val context: Context,
-    val viewModel: YouthSpaceViewModel
+    val viewModel: YouthSpaceViewModel,
+    val startFragmentTag: String
 ) : RecyclerView.Adapter<YouthSpaceListAdapter.YouthSpaceViewHolder>() {
     inner class YouthSpaceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val spaceImage: ImageView
@@ -63,7 +64,10 @@ class YouthSpaceListAdapter(
             viewModel.applyTarget = youthYouthSpaceItems[position].applyTarget
             viewModel.spaceCost = youthYouthSpaceItems[position].spcCost
             viewModel.foodYn = youthYouthSpaceItems[position].foodYn
-            view.findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment)
+            when(startFragmentTag) {
+                "YouthSpaceListFragment" -> view.findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment)
+                "YouthSpaceSearchFragment" -> view.findNavController().navigate(R.id.action_youthSpaceSearchFragment_to_youthSpaceDetailFragment)
+            }
         }
     }
 }
