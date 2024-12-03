@@ -64,19 +64,19 @@ class LoginFragment : Fragment() {
                     Callback<UserTokenResponse> {
                     override fun onResponse(call: Call<UserTokenResponse>, response: Response<UserTokenResponse>) {
                         if(response.isSuccessful) {
-                            Log.d("server response", "successful")
-                            val userToken = response.body()!!.token // 사용자 토큰 → sharedpreference 에 저장
-                            val sharedPreference = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
-                            val editor = sharedPreference.edit()
-                            editor.putString("current_login_user_token", userToken)
-                            editor.commit()
-                            Log.d("userToken", userToken)
-                            Toast.makeText(requireContext(), "환영합니다!", Toast.LENGTH_SHORT).show()
+//                            val userToken = response.body()!!.token // 사용자 토큰 → sharedpreference 에 저장
+//                            val sharedPreference = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
+//                            val editor = sharedPreference.edit() // 언제 쓰지?
+//                            editor.putString("current_login_user_token", userToken)
+//                            editor.commit()
+                            viewModel.isUserLoggedIn = true
+                            Toast.makeText(requireContext(), "환영합니다!", Toast.LENGTH_SHORT).show() // nickname 님 환영합니다 가 더 나을 수도?
                             findNavController().navigate(R.id.action_loginFragment_to_youthSpaceListFragment)
+                            Log.d("server response", "successful")
                         } else {
+                            Toast.makeText(requireContext(), "해당 정보는 존재하지 않습니다!", Toast.LENGTH_SHORT).show()
                             Log.d("server response", "else")
                             Log.d("server response", response.message())
-                            Toast.makeText(requireContext(), "해당 정보는 존재하지 않습니다!", Toast.LENGTH_SHORT).show()
                         }
                     }
 

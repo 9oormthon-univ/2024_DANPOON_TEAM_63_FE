@@ -5,4 +5,5 @@ import androidx.lifecycle.ViewModel
 class AuthenticationViewModel: ViewModel() {
     var id: String = ""
     var password: String = ""
+    var isUserLoggedIn: Boolean = false
 }

@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,7 +23,8 @@ import retrofit2.Response
 class YouthSpaceListFragment : Fragment() {
 
     val binding by lazy { FragmentYouthSpaceListBinding.inflate(layoutInflater) }
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceViewModel: YouthSpaceViewModel by activityViewModels()
+    val authenticationViewModel: AuthenticationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +41,8 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun initView() {
+        if(authenticationViewModel.isUserLoggedIn) binding.ivAuthentication.visibility = View.INVISIBLE
+        else binding.ivAuthentication.visibility = View.VISIBLE
         networking()
     }
 
@@ -55,7 +56,7 @@ class YouthSpaceListFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()!!.youthSpaces
-                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), viewModel, "YouthSpaceListFragment")
+                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), youthSpaceViewModel, "YouthSpaceListFragment")
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
@@ -80,8 +81,15 @@ class YouthSpaceListFragment : Fragment() {
         binding.imageView.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDefineFragment)
         }
-        binding.ivUserProfile.setOnClickListener {
+        binding.ivAuthentication.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceListFragment_to_loginFragment)
+        }
+        binding.ivUserProfile.setOnClickListener {
+            if(authenticationViewModel.isUserLoggedIn) {
+                findNavController().navigate(R.id.action_youthSpaceListFragment_to_settingsUserLoggedInFragment)
+            } else {
+                findNavController().navigate(R.id.action_youthSpaceListFragment_to_settingsUserLoggedOutFragment)
+            }
         }
     }
 

@@ -25,6 +25,12 @@
         <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceSearchFragment"
             app:destination="@id/youthSpaceSearchFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_settingsUserLoggedOutFragment"
+            app:destination="@id/settingsUserLoggedOutFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_settingsUserLoggedInFragment"
+            app:destination="@id/settingsUserLoggedInFragment" />
     </fragment>
 
     <fragment
@@ -158,6 +164,26 @@
         <action
             android:id="@+id/action_youthSpaceSearchFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsUserLoggedOutFragment"
+        android:name="com.example.youthspacefinder.presentation.settings.SettingsUserLoggedOutFragment"
+        android:label="fragment_settings_user_logged_out"
+        tools:layout="@layout/fragment_settings_user_logged_out" >
+        <action
+            android:id="@+id/action_settingsUserLoggedOutFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
+        <action
+            android:id="@+id/action_settingsUserLoggedOutFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsUserLoggedInFragment"
+        android:name="com.example.youthspacefinder.presentation.settings.SettingsUserLoggedInFragment"
+        android:label="SettingsUserLoggedInFragment" >
+        <action
+            android:id="@+id/action_settingsUserLoggedInFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
     </fragment>
 
 </navigation>
