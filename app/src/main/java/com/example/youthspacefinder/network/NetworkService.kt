@@ -1,9 +1,11 @@
 package com.example.youthspacefinder.network
 
 import AmenitiesResponse
+import LoginUserInfo
 import PositionResponse
 import RegisterUserInfo
 import SpacesInfoResponse
+import com.example.youthspacefinder.model.UserTokenResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -32,4 +34,9 @@ interface NetworkService {
     fun registerUserInfo(
         @Body registerUserInfo: RegisterUserInfo
     ): Call<Any>
+
+    @POST("api/auth/login")
+    fun checkUserLoginInfo(
+        @Body loginUserInfo: LoginUserInfo
+    ): Call<UserTokenResponse> // token
 }

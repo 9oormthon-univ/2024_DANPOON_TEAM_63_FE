@@ -6,6 +6,7 @@ import com.tickaroo.tikxml.TikXml
 import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL_OPEN_API = "https://www.youthcenter.go.kr/"
@@ -26,6 +27,7 @@ object RetrofitInstance {
     val networkServiceBackEnd: NetworkService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL_BACK_END)
+            .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(lenientGson))
             .build()
             .create(NetworkService::class.java)

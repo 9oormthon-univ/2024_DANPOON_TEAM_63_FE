@@ -6,3 +6,7 @@ data class UserReviewInfo(
     val dateTime: String,
     val content: String
 )
+
+data class UserTokenResponse(
+    val token: String
+)

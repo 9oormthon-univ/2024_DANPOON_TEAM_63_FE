@@ -95,3 +95,8 @@ data class RegisterUserInfo(
     val password: String,
     val email: String
 )
+
+data class LoginUserInfo(
+    val username: String,
+    val password: String
+)
