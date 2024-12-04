@@ -6,4 +6,5 @@ class AuthenticationViewModel: ViewModel() {
     var id: String = ""
     var password: String = ""
     var isUserLoggedIn: Boolean = false
+    var userToken: String? = null
 }

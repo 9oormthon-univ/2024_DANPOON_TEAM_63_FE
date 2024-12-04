@@ -1,15 +1,18 @@
 package com.example.youthspacefinder.network
 
 import AmenitiesResponse
-import LoginUserInfo
 import PositionResponse
-import RegisterUserInfo
 import SpacesInfoResponse
+import com.example.youthspacefinder.model.LoginUserInfo
+import com.example.youthspacefinder.model.RegisterUserInfo
+import com.example.youthspacefinder.model.UserNicknameRequest
 import com.example.youthspacefinder.model.UserTokenResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface NetworkService {
@@ -38,5 +41,11 @@ interface NetworkService {
     @POST("api/auth/login")
     fun checkUserLoginInfo(
         @Body loginUserInfo: LoginUserInfo
-    ): Call<UserTokenResponse> // token
+    ): Call<UserTokenResponse>
+
+    @PUT("api/users/nickname")
+    fun changeUserNickname(
+        @Header("Authorization") token: String,
+        @Body newNickname: UserNicknameRequest // json 형태로 보낼려면 data class 에 담아야한다.
+    ): Call<Any>
 }

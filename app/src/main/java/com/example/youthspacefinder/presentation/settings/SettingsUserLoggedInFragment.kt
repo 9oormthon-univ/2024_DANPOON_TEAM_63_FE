@@ -1,6 +1,7 @@
 package com.example.youthspacefinder.presentation.settings
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentSettingsUserLoggedInBinding
+import com.example.youthspacefinder.model.UserNicknameRequest
+import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingsUserLoggedInFragment : Fragment() {
 
@@ -34,8 +40,34 @@ class SettingsUserLoggedInFragment : Fragment() {
             findNavController().navigate(R.id.action_settingsUserLoggedInFragment_to_youthSpaceListFragment)
         }
         binding.btnSave.setOnClickListener {
-            // 닉네임 변경
             val newUserNickname = binding.etUserNickname.text.toString()
+            if (newUserNickname.isBlank()) {
+                Toast.makeText(requireContext(), "닉네임을 입력하지 않았습니다!", Toast.LENGTH_SHORT).show()
+            } else {
+                // 닉네임 변경 통신
+                val userNicknameRequest = UserNicknameRequest(newUserNickname)
+                RetrofitInstance.networkServiceBackEnd.changeUserNickname(
+                    authenticationViewModel.userToken!!,
+                    userNicknameRequest
+                ).enqueue(object: Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        Log.d("server response", response.message())
+                        if(response.isSuccessful) {
+                            Toast.makeText(requireContext(), "닉네임 변경을 완료했습니다!", Toast.LENGTH_SHORT).show()
+                            Log.d("server response", "successful")
+                        } else {
+                            Log.d("server response", "is not successful")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Toast.makeText(requireContext(), "네트워크가 불안정합니다!", Toast.LENGTH_SHORT).show()
+                        Log.d("server response", "onFailure")
+                        Log.d("server response", "${t.message}")
+                    }
+
+                })
+            }
         }
         binding.btnLogout.setOnClickListener {
             authenticationViewModel.isUserLoggedIn = false

@@ -88,15 +88,3 @@ data class PositionResponse(
     @SerializedName("x") val positionX: String,
     @SerializedName("y") val positionY: String
 )
-
-data class RegisterUserInfo(
-    val username: String,
-    val nickname: String,
-    val password: String,
-    val email: String
-)
-
-data class LoginUserInfo(
-    val username: String,
-    val password: String
-)
