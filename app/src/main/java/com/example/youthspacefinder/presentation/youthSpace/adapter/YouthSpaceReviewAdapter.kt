@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youthspacefinder.R
-import com.example.youthspacefinder.model.UserReviewInfo
+import com.example.youthspacefinder.model.ReviewResponse
 
 class YouthSpaceReviewAdapter(
-    val userReviews: ArrayList<UserReviewInfo>,
+    val userReviews: List<ReviewResponse>,
     val context: Context
 ): RecyclerView.Adapter<YouthSpaceReviewAdapter.YouthSpaceReviewViewHolder>() {
     inner class YouthSpaceReviewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -35,7 +35,7 @@ class YouthSpaceReviewAdapter(
 
     override fun onBindViewHolder(holder: YouthSpaceReviewViewHolder, position: Int) {
         holder.userNickname.text = userReviews[position].nickname
-        holder.reviewDatetime.text = userReviews[position].dateTime
+        holder.reviewDatetime.text = userReviews[position].updateAt
         holder.reviewContent.text = userReviews[position].content
     }
 }

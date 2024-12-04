@@ -1,7 +1,9 @@
 package com.example.youthspacefinder.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ReviewResponse(
-    val id: Long,
+    @SerializedName("id") val reviewId: Long,
     val youthSpaceId: Long,
     val username: String,
     val nickname: String,

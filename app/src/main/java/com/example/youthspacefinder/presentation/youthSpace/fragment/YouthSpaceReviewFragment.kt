@@ -45,7 +45,6 @@ class YouthSpaceReviewFragment : Fragment() {
 
     private fun initView() {
         binding.tvYouthSpaceName.text = youthSpaceViewModel.spaceName
-        binding.recyclerview.adapter = YouthSpaceReviewAdapter(Utils.dummyReviews, requireContext())
         if(authenticationViewModel.isUserLoggedIn) {
             binding.llReviewLoggedIn.visibility = View.VISIBLE
             binding.llReviewLoggedOut.visibility = View.GONE
@@ -54,6 +53,31 @@ class YouthSpaceReviewFragment : Fragment() {
             binding.llReviewLoggedOut.visibility = View.VISIBLE
         }
         binding.tvNickname.text = authenticationViewModel.id
+        networking()
+    }
+
+    private fun networking() {
+        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceViewModel.spaceId!!.toLong()).enqueue(object: Callback<List<ReviewResponse>> {
+            override fun onResponse(
+                call: Call<List<ReviewResponse>>,
+                response: Response<List<ReviewResponse>>
+            ) {
+                if(response.isSuccessful) {
+                    Log.d("server response", "successful")
+                    Log.d("server response", "$response")
+                    val response = response.body()
+                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(response!!, requireContext())
+                } else {
+                    Log.d("server response", "else")
+                }
+            }
+
+            override fun onFailure(call: Call<List<ReviewResponse>>, t: Throwable) {
+                Log.d("server response", "${t.message}")
+            }
+
+        })
+
     }
 
     private fun setupListeners() {
@@ -74,16 +98,16 @@ class YouthSpaceReviewFragment : Fragment() {
                             response: Response<ReviewResponse>
                         ) {
                             if(response.isSuccessful) {
-                                Log.d("server response", "successful")
+
                                 val response = response.body()
-                                Log.d("server response", "$response")
+
                             } else {
-                                Log.d("server response", "else")
+
                             }
                         }
 
                         override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
-                            Log.d("server response", "${t.message}")
+
                         }
 
                     })
