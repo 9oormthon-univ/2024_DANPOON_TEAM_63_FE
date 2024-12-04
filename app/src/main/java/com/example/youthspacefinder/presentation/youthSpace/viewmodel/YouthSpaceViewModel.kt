@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 class YouthSpaceViewModel: ViewModel() {
     var spaceImage: Int? = null
     var spaceName: String? = null
+    var spaceId: String? = null
     var spaceAddress: String? = null
     var spacePositionX: String? = null
     var spacePositionY: String? = null

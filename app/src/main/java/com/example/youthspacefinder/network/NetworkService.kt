@@ -5,6 +5,8 @@ import PositionResponse
 import SpacesInfoResponse
 import com.example.youthspacefinder.model.LoginUserInfo
 import com.example.youthspacefinder.model.RegisterUserInfo
+import com.example.youthspacefinder.model.ReviewRequest
+import com.example.youthspacefinder.model.ReviewResponse
 import com.example.youthspacefinder.model.UserNicknameRequest
 import com.example.youthspacefinder.model.UserPasswordRequest
 import com.example.youthspacefinder.model.UserTokenResponse
@@ -55,4 +57,10 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Body passwordRequest: UserPasswordRequest
     ): Call<Any>
+
+    @POST("api/reviews")
+    fun registerSpaceReview(
+        @Header("Authorization") token: String,
+        @Body reviewRequest: ReviewRequest
+    ): Call<ReviewResponse>
 }

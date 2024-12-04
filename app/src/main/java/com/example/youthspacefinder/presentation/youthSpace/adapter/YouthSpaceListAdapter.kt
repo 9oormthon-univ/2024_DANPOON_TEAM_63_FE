@@ -55,6 +55,7 @@ class YouthSpaceListAdapter(
         holder.itemView.setOnClickListener { view ->
             viewModel.spaceImage = randomImage
             viewModel.spaceName = youthYouthSpaceItems[position].spcName
+            viewModel.spaceId = youthYouthSpaceItems[position].spcId
             viewModel.spaceAddress = youthYouthSpaceItems[position].address
             viewModel.spaceTime = youthYouthSpaceItems[position].spcTime
             viewModel.operateOrgan =  youthYouthSpaceItems[position].operOrgan
