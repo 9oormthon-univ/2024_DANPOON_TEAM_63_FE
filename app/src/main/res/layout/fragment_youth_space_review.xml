@@ -3,20 +3,25 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:fillViewport="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".presentation.youthSpace.fragment.YouthSpaceReviewFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:orientation="vertical"
-        tools:context=".presentation.youthSpace.fragment.YouthSpaceReviewFragment">
+        android:layout_height="match_parent"
+        android:background="@color/background">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_title"
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:background="@drawable/bg_youth_space"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_go_back"
@@ -43,6 +48,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -50,7 +56,9 @@
             android:text="l 청년들의 후기 및 리뷰"
             android:textColor="@color/text_title"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -61,37 +69,41 @@
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_user_review"
-            tools:itemCount="4"/>
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_user_review" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ll_review_loggedIn"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="#ECF0FF"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <LinearLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_user_profile"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_user_profile_temp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_user_profile"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_user_profile_temp" />
-
-                <TextView
-                    android:id="@+id/tv_nickname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#5464AF"
-                    android:textStyle="bold"
-                    tools:text="사용자 이름" />
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:textColor="#5464AF"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/iv_user_profile"
+                app:layout_constraintStart_toStartOf="@id/iv_user_profile"
+                app:layout_constraintTop_toBottomOf="@id/iv_user_profile"
+                tools:text="사용자 이름" />
 
             <EditText
                 android:id="@+id/et_write_comment"
@@ -105,8 +117,10 @@
                 android:hint="후기 댓글 작성하기..."
                 android:paddingStart="12dp"
                 android:paddingTop="8dp"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_user_profile" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/ll_review_loggedOut"
@@ -114,7 +128,11 @@
             android:layout_height="120dp"
             android:background="#ECF0FF"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="52dp"
@@ -131,5 +149,5 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
