@@ -26,3 +26,9 @@ data class UserTokenResponse(
 data class UserNicknameRequest(
     val newNickname: String
 )
+
+data class UserPasswordRequest(
+    val currentPassword: String,
+    val newPassword: String,
+    val confirmNewPassword: String
+)

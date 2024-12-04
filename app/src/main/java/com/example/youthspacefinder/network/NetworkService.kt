@@ -6,6 +6,7 @@ import SpacesInfoResponse
 import com.example.youthspacefinder.model.LoginUserInfo
 import com.example.youthspacefinder.model.RegisterUserInfo
 import com.example.youthspacefinder.model.UserNicknameRequest
+import com.example.youthspacefinder.model.UserPasswordRequest
 import com.example.youthspacefinder.model.UserTokenResponse
 import retrofit2.Call
 import retrofit2.http.Body
@@ -47,5 +48,11 @@ interface NetworkService {
     fun changeUserNickname(
         @Header("Authorization") token: String,
         @Body newNickname: UserNicknameRequest // json 형태로 보낼려면 data class 에 담아야한다.
+    ): Call<Any>
+
+    @PUT("api/users/password")
+    fun changeUserPassword(
+        @Header("Authorization") token: String,
+        @Body passwordRequest: UserPasswordRequest
     ): Call<Any>
 }

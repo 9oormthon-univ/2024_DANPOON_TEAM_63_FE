@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentSettingsUserLoggedInBinding
 import com.example.youthspacefinder.model.UserNicknameRequest
+import com.example.youthspacefinder.model.UserPasswordRequest
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
 import retrofit2.Call
@@ -49,23 +50,54 @@ class SettingsUserLoggedInFragment : Fragment() {
                 RetrofitInstance.networkServiceBackEnd.changeUserNickname(
                     authenticationViewModel.userToken!!,
                     userNicknameRequest
-                ).enqueue(object: Callback<Any> {
+                ).enqueue(object : Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                        Log.d("server response", response.message())
-                        if(response.isSuccessful) {
-                            Toast.makeText(requireContext(), "닉네임 변경을 완료했습니다!", Toast.LENGTH_SHORT).show()
-                            Log.d("server response", "successful")
-                        } else {
-                            Log.d("server response", "is not successful")
+                        if (response.isSuccessful) {
+                            Toast.makeText(requireContext(), "닉네임 변경을 완료했습니다!", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     }
 
                     override fun onFailure(call: Call<Any>, t: Throwable) {
                         Toast.makeText(requireContext(), "네트워크가 불안정합니다!", Toast.LENGTH_SHORT).show()
-                        Log.d("server response", "onFailure")
-                        Log.d("server response", "${t.message}")
                     }
 
+                })
+            }
+        }
+        binding.btnChangePassword.setOnClickListener {
+            val newPassword = binding.etNewPassword.text.toString()
+            val newPasswordCheck = binding.etNewPasswordCheck.text.toString()
+            val currentPassword = binding.etCurrentPassword.text.toString()
+            if (newPassword.isBlank() || newPasswordCheck.isBlank() || currentPassword.isBlank()) {
+                Toast.makeText(requireContext(), "입력하지 않은 정보가 있습니다!", Toast.LENGTH_SHORT).show()
+            } else if (newPassword != newPasswordCheck) {
+                Toast.makeText(requireContext(), "새 비밀번호가 일치하지 않습니다!", Toast.LENGTH_SHORT).show()
+            } else if (currentPassword != authenticationViewModel.password) {
+                Toast.makeText(requireContext(), "현재 비밀번호를 잘못 입력했습니다!", Toast.LENGTH_SHORT).show()
+            } else {
+                // 서버 통신
+                val userPasswordRequest = UserPasswordRequest(
+                    currentPassword = currentPassword,
+                    newPassword = newPassword,
+                    confirmNewPassword = newPasswordCheck
+                )
+                RetrofitInstance.networkServiceBackEnd.changeUserPassword(
+                    authenticationViewModel.userToken!!,
+                    userPasswordRequest
+                ).enqueue(object: Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        if(response.isSuccessful) {
+                            Log.d("server response", "successful")
+                            authenticationViewModel.password = newPassword
+                            Toast.makeText(requireContext(), "비밀번호 변경을 완료했습니다!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Log.d("server response", "else")
+                        }
+                    }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Log.d("server response", "failure and message: ${t.message}")
+                    }
                 })
             }
         }
