@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.model.ReviewResponse
+import com.example.youthspacefinder.presentation.youthSpace.fragment.OnReviewOptionClickListener
 
 class YouthSpaceReviewAdapter(
     val userReviews: ArrayList<ReviewResponse>,
-    val context: Context
+    val context: Context,
+    val listener: OnReviewOptionClickListener
 ): RecyclerView.Adapter<YouthSpaceReviewAdapter.YouthSpaceReviewViewHolder>() {
     inner class YouthSpaceReviewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         val userNickname: TextView
@@ -25,21 +27,23 @@ class YouthSpaceReviewAdapter(
             reviewDatetime = itemView.findViewById(R.id.tv_review_datetime)
             reviewContent = itemView.findViewById(R.id.tv_review_content)
             reviewOption = itemView.findViewById(R.id.iv_show_more)
-            reviewOption.setOnClickListener {showPopUpMenu(it)}
+            reviewOption.setOnClickListener {
+                showPopUpMenu(it, userReviews[adapterPosition].reviewId)
+            }
         }
     }
 
-    private fun showPopUpMenu(anchorView: View) {
+    private fun showPopUpMenu(anchorView: View, reviewId: Long) {
         val popupMenu = PopupMenu(context, anchorView)
         popupMenu.menuInflater.inflate(R.menu.review_option, popupMenu.menu)
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.modify -> {
-                    // 리뷰 수정하기
+                    listener.onReviewOptionModifyClicked(reviewId)
                     true
                 }
                 R.id.delete -> {
-                    // 리뷰 삭제하기
+                    listener.onReviewOptionDeleteClicked(reviewId)
                     true
                 }
                 else -> false

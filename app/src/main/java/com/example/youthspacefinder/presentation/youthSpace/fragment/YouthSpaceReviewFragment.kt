@@ -20,14 +20,16 @@ import com.example.youthspacefinder.model.ReviewResponse
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
 import com.example.youthspacefinder.presentation.youthSpace.adapter.YouthSpaceReviewAdapter
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.dialog.ReviewDeleteDialog
+import com.example.youthspacefinder.presentation.youthSpace.dialog.ReviewModifyDialog
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class YouthSpaceReviewFragment : Fragment() {
+class YouthSpaceReviewFragment : Fragment(), OnReviewOptionClickListener, OnReviewItemChangedListener {
     val binding by lazy { FragmentYouthSpaceReviewBinding.inflate(layoutInflater) }
-    private val youthSpaceViewModel: YouthSpaceViewModel by activityViewModels()
+    private val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     var userReviews = arrayListOf<ReviewResponse>()
 
@@ -45,7 +47,7 @@ class YouthSpaceReviewFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.tvYouthSpaceName.text = youthSpaceViewModel.spaceName
+        binding.tvYouthSpaceName.text = youthSpaceInfoViewModel.spaceName
         if(authenticationViewModel.isUserLoggedIn) {
             binding.llReviewLoggedIn.visibility = View.VISIBLE
             binding.llReviewLoggedOut.visibility = View.GONE
@@ -58,14 +60,14 @@ class YouthSpaceReviewFragment : Fragment() {
     }
 
     private fun networking() {
-        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceViewModel.spaceId!!.toLong()).enqueue(object: Callback<ArrayList<ReviewResponse>> {
+        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceInfoViewModel.spaceId!!.toLong()).enqueue(object: Callback<ArrayList<ReviewResponse>> {
             override fun onResponse(
                 call: Call<ArrayList<ReviewResponse>>,
                 response: Response<ArrayList<ReviewResponse>>
             ) {
                 if(response.isSuccessful) {
                     userReviews = response.body()!!
-                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(userReviews, requireContext())
+                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(userReviews, requireContext(), this@YouthSpaceReviewFragment)
                 } else {
                     Log.d("server response", "else")
                 }
@@ -87,7 +89,7 @@ class YouthSpaceReviewFragment : Fragment() {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     val userComment = binding.etWriteComment.text.toString()
-                    val reviewRequest = ReviewRequest(youthSpaceId = youthSpaceViewModel.spaceId!!.toLong(), content = userComment)
+                    val reviewRequest = ReviewRequest(youthSpaceId = youthSpaceInfoViewModel.spaceId!!.toLong(), content = userComment)
                     RetrofitInstance.networkServiceBackEnd.registerSpaceReview(
                         token = authenticationViewModel.userToken!!,
                         reviewRequest = reviewRequest
@@ -119,5 +121,27 @@ class YouthSpaceReviewFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onReviewOptionDeleteClicked(reviewId: Long) {
+        val reviewDeleteDialog = ReviewDeleteDialog.newInstance(reviewId)
+        reviewDeleteDialog.show(
+            childFragmentManager, ReviewDeleteDialog.DIALOG_TAG
+        )
+    }
+
+    override fun onReviewOptionModifyClicked(reviewId: Long) {
+        ReviewModifyDialog().show(
+            childFragmentManager, ReviewModifyDialog.TAG
+        )
+    }
+
+    override fun onReviewItemChanged(reviewId: Long) {
+        val specificReview = userReviews.find {
+            it.reviewId == reviewId
+        }
+        userReviews.remove(specificReview)
+        binding.recyclerview.adapter?.notifyDataSetChanged() // 나중에 position 받아오는걸로 리팩토링하기
+        Toast.makeText(requireContext(), "후기가 삭제되었습니다!", Toast.LENGTH_SHORT).show()
     }
 }

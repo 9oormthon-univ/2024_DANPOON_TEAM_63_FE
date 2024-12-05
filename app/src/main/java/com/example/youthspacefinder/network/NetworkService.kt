@@ -12,10 +12,12 @@ import com.example.youthspacefinder.model.UserPasswordRequest
 import com.example.youthspacefinder.model.UserTokenResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface NetworkService {
@@ -68,4 +70,10 @@ interface NetworkService {
     fun getSpaceReviews(
         @Query("youthSpaceId") youthSpaceId: Long
     ): Call<ArrayList<ReviewResponse>>
+
+    @DELETE("api/reviews/{reviewId}")
+    fun deleteSpaceReview(
+        @Header("Authorization") token: String,
+        @Path("reviewId") reviewId: Long
+    ): Call<Any>
 }
