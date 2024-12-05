@@ -10,7 +10,7 @@ import com.example.youthspacefinder.R
 import com.example.youthspacefinder.model.ReviewResponse
 
 class YouthSpaceReviewAdapter(
-    val userReviews: List<ReviewResponse>,
+    val userReviews: ArrayList<ReviewResponse>,
     val context: Context
 ): RecyclerView.Adapter<YouthSpaceReviewAdapter.YouthSpaceReviewViewHolder>() {
     inner class YouthSpaceReviewViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

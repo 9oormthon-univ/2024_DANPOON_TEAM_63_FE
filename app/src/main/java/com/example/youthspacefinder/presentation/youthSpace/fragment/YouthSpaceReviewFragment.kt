@@ -9,11 +9,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
-import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceReviewBinding
 import com.example.youthspacefinder.model.ReviewRequest
 import com.example.youthspacefinder.model.ReviewResponse
@@ -29,6 +29,7 @@ class YouthSpaceReviewFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceReviewBinding.inflate(layoutInflater) }
     private val youthSpaceViewModel: YouthSpaceViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
+    var userReviews = arrayListOf<ReviewResponse>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,22 +58,20 @@ class YouthSpaceReviewFragment : Fragment() {
     }
 
     private fun networking() {
-        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceViewModel.spaceId!!.toLong()).enqueue(object: Callback<List<ReviewResponse>> {
+        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceViewModel.spaceId!!.toLong()).enqueue(object: Callback<ArrayList<ReviewResponse>> {
             override fun onResponse(
-                call: Call<List<ReviewResponse>>,
-                response: Response<List<ReviewResponse>>
+                call: Call<ArrayList<ReviewResponse>>,
+                response: Response<ArrayList<ReviewResponse>>
             ) {
                 if(response.isSuccessful) {
-                    Log.d("server response", "successful")
-                    Log.d("server response", "$response")
-                    val response = response.body()
-                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(response!!, requireContext())
+                    userReviews = response.body()!!
+                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(userReviews, requireContext())
                 } else {
                     Log.d("server response", "else")
                 }
             }
 
-            override fun onFailure(call: Call<List<ReviewResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<ReviewResponse>>, t: Throwable) {
                 Log.d("server response", "${t.message}")
             }
 
@@ -98,9 +97,12 @@ class YouthSpaceReviewFragment : Fragment() {
                             response: Response<ReviewResponse>
                         ) {
                             if(response.isSuccessful) {
-
-                                val response = response.body()
-
+                                val newReview = response.body()
+                                Toast.makeText(requireContext(), "후기가 등록되었습니다!", Toast.LENGTH_SHORT).show()
+                                binding.etWriteComment.setText("")
+                                userReviews.add(newReview!!)
+                                val newReviewPosition = userReviews.size-1
+                                binding.recyclerview.adapter?.notifyItemInserted(newReviewPosition)
                             } else {
 
                             }

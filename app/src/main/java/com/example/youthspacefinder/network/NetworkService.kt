@@ -67,5 +67,5 @@ interface NetworkService {
     @GET("api/showReviews")
     fun getSpaceReviews(
         @Query("youthSpaceId") youthSpaceId: Long
-    ): Call<List<ReviewResponse>>
+    ): Call<ArrayList<ReviewResponse>>
 }
