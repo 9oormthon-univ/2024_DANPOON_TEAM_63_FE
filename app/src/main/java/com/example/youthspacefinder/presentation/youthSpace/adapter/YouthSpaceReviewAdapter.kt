@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.youthspacefinder.R
@@ -17,11 +19,33 @@ class YouthSpaceReviewAdapter(
         val userNickname: TextView
         val reviewDatetime: TextView
         val reviewContent: TextView
+        val reviewOption: ImageView
         init {
             userNickname = itemView.findViewById(R.id.tv_nickname)
             reviewDatetime = itemView.findViewById(R.id.tv_review_datetime)
             reviewContent = itemView.findViewById(R.id.tv_review_content)
+            reviewOption = itemView.findViewById(R.id.iv_show_more)
+            reviewOption.setOnClickListener {showPopUpMenu(it)}
         }
+    }
+
+    private fun showPopUpMenu(anchorView: View) {
+        val popupMenu = PopupMenu(context, anchorView)
+        popupMenu.menuInflater.inflate(R.menu.review_option, popupMenu.menu)
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.modify -> {
+                    // 리뷰 수정하기
+                    true
+                }
+                R.id.delete -> {
+                    // 리뷰 삭제하기
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YouthSpaceReviewViewHolder {

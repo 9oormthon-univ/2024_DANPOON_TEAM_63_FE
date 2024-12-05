@@ -26,7 +26,8 @@
             android:textColor="#5464AF"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:orientation="vertical">
@@ -43,4 +44,12 @@
             tools:text="시설이 깔끔하고 정돈되어있고, 다양한 컨텐츠들이 많아서 또 올 것 같습니다."
             android:textColor="@color/black"/>
     </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_show_more"
+        android:layout_width="12dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_show_more"/>
 </LinearLayout>
