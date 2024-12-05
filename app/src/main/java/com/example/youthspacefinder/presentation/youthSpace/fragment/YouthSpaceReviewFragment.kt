@@ -48,7 +48,7 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
 
     private fun initView() {
         binding.tvYouthSpaceName.text = youthSpaceInfoViewModel.spaceName
-        if(authenticationViewModel.isUserLoggedIn) {
+        if (authenticationViewModel.isUserLoggedIn) {
             binding.llReviewLoggedIn.visibility = View.VISIBLE
             binding.llReviewLoggedOut.visibility = View.GONE
         } else {
@@ -60,24 +60,36 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
     }
 
     private fun networking() {
-        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceInfoViewModel.spaceId!!.toLong()).enqueue(object: Callback<ArrayList<ReviewResponse>> {
-            override fun onResponse(
-                call: Call<ArrayList<ReviewResponse>>,
-                response: Response<ArrayList<ReviewResponse>>
-            ) {
-                if(response.isSuccessful) {
-                    userReviews = response.body()!!
-                    binding.recyclerview.adapter = YouthSpaceReviewAdapter(userReviews, requireContext(), this@YouthSpaceReviewFragment)
-                } else {
-                    Log.d("server response", "else")
+        RetrofitInstance.networkServiceBackEnd.getSpaceReviews(youthSpaceInfoViewModel.spaceId!!.toLong())
+            .enqueue(object : Callback<ArrayList<ReviewResponse>> {
+                override fun onResponse(
+                    call: Call<ArrayList<ReviewResponse>>,
+                    response: Response<ArrayList<ReviewResponse>>
+                ) {
+                    if (response.isSuccessful) {
+                        userReviews = response.body()!!
+                        if (userReviews.isEmpty()) {
+                            binding.recyclerview.visibility = View.GONE
+                            binding.llReviewEmpty.visibility = View.VISIBLE
+                        } else {
+                            binding.recyclerview.visibility = View.VISIBLE
+                            binding.llReviewEmpty.visibility = View.GONE
+                            binding.recyclerview.adapter = YouthSpaceReviewAdapter(
+                                userReviews,
+                                requireContext(),
+                                this@YouthSpaceReviewFragment
+                            )
+                        }
+                    } else {
+                        Log.d("server response", "else")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<ArrayList<ReviewResponse>>, t: Throwable) {
-                Log.d("server response", "${t.message}")
-            }
+                override fun onFailure(call: Call<ArrayList<ReviewResponse>>, t: Throwable) {
+                    Log.d("server response", "${t.message}")
+                }
 
-        })
+            })
 
     }
 
@@ -89,22 +101,27 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
             override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     val userComment = binding.etWriteComment.text.toString()
-                    val reviewRequest = ReviewRequest(youthSpaceId = youthSpaceInfoViewModel.spaceId!!.toLong(), content = userComment)
+                    val reviewRequest = ReviewRequest(
+                        youthSpaceId = youthSpaceInfoViewModel.spaceId!!.toLong(),
+                        content = userComment
+                    )
                     RetrofitInstance.networkServiceBackEnd.registerSpaceReview(
                         token = authenticationViewModel.userToken!!,
                         reviewRequest = reviewRequest
-                    ).enqueue(object: Callback<ReviewResponse> {
+                    ).enqueue(object : Callback<ReviewResponse> {
                         override fun onResponse(
                             call: Call<ReviewResponse>,
                             response: Response<ReviewResponse>
                         ) {
-                            if(response.isSuccessful) {
+                            if (response.isSuccessful) {
                                 val newReview = response.body()
-                                Toast.makeText(requireContext(), "후기가 등록되었습니다!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireContext(), "후기가 등록되었습니다!", Toast.LENGTH_SHORT)
+                                    .show()
                                 binding.etWriteComment.setText("")
                                 userReviews.add(newReview!!)
-                                val newReviewPosition = userReviews.size-1
+                                val newReviewPosition = userReviews.size - 1
                                 binding.recyclerview.adapter?.notifyItemInserted(newReviewPosition)
+                                binding.llReviewEmpty.visibility = View.GONE
                             } else {
 
                             }
@@ -143,6 +160,9 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
         }
         userReviews.removeAt(deleteReviewPosition)
         binding.recyclerview.adapter?.notifyItemRemoved(deleteReviewPosition)
+        if(userReviews.isEmpty()) {
+            binding.llReviewEmpty.visibility = View.VISIBLE
+        }
         Toast.makeText(requireContext(), "후기가 삭제되었습니다!", Toast.LENGTH_SHORT).show()
     }
 
