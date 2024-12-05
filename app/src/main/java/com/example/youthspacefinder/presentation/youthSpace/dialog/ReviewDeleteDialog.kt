@@ -9,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
-import com.example.youthspacefinder.presentation.youthSpace.fragment.OnReviewItemChangedListener
+import com.example.youthspacefinder.presentation.youthSpace.fragment.OnReviewItemListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,13 +17,13 @@ import retrofit2.Response
 class ReviewDeleteDialog : DialogFragment() {
 
     private var reviewId: Long? = null
-    private var reviewItemChangedListener: OnReviewItemChangedListener ?= null
+    private var reviewItemListener: OnReviewItemListener ?= null
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if(parentFragment is OnReviewItemChangedListener) {
-            reviewItemChangedListener = parentFragment as OnReviewItemChangedListener
+        if(parentFragment is OnReviewItemListener) {
+            reviewItemListener = parentFragment as OnReviewItemListener
         }
     }
 
@@ -46,7 +46,7 @@ class ReviewDeleteDialog : DialogFragment() {
                     Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>) {
                         if(response.isSuccessful) {
-                            reviewItemChangedListener?.onReviewItemChanged(reviewId!!)
+                            reviewItemListener?.onReviewItemDeleted(reviewId!!)
                         }
                         else {
                             Log.d("else", "다른 유저가 쓴 글은 삭제하지 못합니다.") // toast 메세지로 띄우기..?

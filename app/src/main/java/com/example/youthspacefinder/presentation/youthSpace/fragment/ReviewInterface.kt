@@ -1,10 +1,10 @@
 package com.example.youthspacefinder.presentation.youthSpace.fragment
 
-interface OnReviewOptionClickListener {
+import com.example.youthspacefinder.model.ReviewResponse
+
+interface OnReviewItemListener {
     fun onReviewOptionDeleteClicked(reviewId: Long)
     fun onReviewOptionModifyClicked(reviewId: Long)
-}
-
-interface OnReviewItemChangedListener {
-    fun onReviewItemChanged(reviewId: Long)
+    fun onReviewItemDeleted(reviewId: Long)
+    fun onReviewItemChanged(review: ReviewResponse)
 }

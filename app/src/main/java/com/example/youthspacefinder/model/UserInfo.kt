@@ -32,8 +32,3 @@ data class UserPasswordRequest(
     val newPassword: String,
     val confirmNewPassword: String
 )
-
-data class ReviewRequest(
-    val youthSpaceId: Long,
-    val content: String
-)

@@ -27,7 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class YouthSpaceReviewFragment : Fragment(), OnReviewOptionClickListener, OnReviewItemChangedListener {
+class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
     val binding by lazy { FragmentYouthSpaceReviewBinding.inflate(layoutInflater) }
     private val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
@@ -131,17 +131,27 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewOptionClickListener, OnRevi
     }
 
     override fun onReviewOptionModifyClicked(reviewId: Long) {
-        ReviewModifyDialog().show(
-            childFragmentManager, ReviewModifyDialog.TAG
+        val reviewModifyDialog = ReviewModifyDialog.newInstance(reviewId)
+        reviewModifyDialog.show(
+            childFragmentManager, ReviewModifyDialog.DIALOG_TAG
         )
     }
 
-    override fun onReviewItemChanged(reviewId: Long) {
-        val specificReview = userReviews.find {
+    override fun onReviewItemDeleted(reviewId: Long) {
+        val deleteReviewPosition = userReviews.indexOfFirst {
             it.reviewId == reviewId
         }
-        userReviews.remove(specificReview)
-        binding.recyclerview.adapter?.notifyDataSetChanged() // 나중에 position 받아오는걸로 리팩토링하기
+        userReviews.removeAt(deleteReviewPosition)
+        binding.recyclerview.adapter?.notifyItemRemoved(deleteReviewPosition)
         Toast.makeText(requireContext(), "후기가 삭제되었습니다!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onReviewItemChanged(review: ReviewResponse) {
+        val modifyReviewPosition = userReviews.indexOfFirst {
+            it.reviewId == review.reviewId
+        }
+        userReviews[modifyReviewPosition] = review
+        binding.recyclerview.adapter?.notifyItemChanged(modifyReviewPosition)
+        Toast.makeText(requireContext(), "후기가 수정되었습니다!", Toast.LENGTH_SHORT).show()
     }
 }

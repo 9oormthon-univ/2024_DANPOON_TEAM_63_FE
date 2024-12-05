@@ -76,4 +76,11 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Path("reviewId") reviewId: Long
     ): Call<Any>
+
+    @PUT("api/reviews/{reviewId}")
+    fun modifySpaceReview(
+        @Header("Authorization") token: String,
+        @Path("reviewId") reviewId: Long,
+        @Body modifyReviewRequest: ReviewRequest
+    ): Call<ReviewResponse>
 }
