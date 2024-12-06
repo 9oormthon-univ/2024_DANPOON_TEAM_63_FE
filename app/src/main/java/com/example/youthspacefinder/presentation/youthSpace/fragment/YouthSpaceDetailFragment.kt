@@ -1,12 +1,14 @@
 package com.example.youthspacefinder.presentation.youthSpace.fragment
 
 import PositionResponse
+import RegisterFavoriteRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,10 +17,10 @@ import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.Utils
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
-import com.kakao.vectormap.KakaoMapSdk
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.camera.CameraUpdateFactory
@@ -29,7 +31,8 @@ import retrofit2.Response
 
 class YouthSpaceDetailFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceDetailBinding.inflate(layoutInflater) }
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
+    val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     private var kakaoMap: KakaoMap? = null
 
     override fun onCreateView(
@@ -46,11 +49,11 @@ class YouthSpaceDetailFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val address = viewModel.spaceAddress
-        val spcImage = viewModel.spaceImage
-        val spcName = viewModel.spaceName
-        val spcTime = viewModel.spaceTime
-        val telNo = viewModel.telephoneNumber
+        val address = youthSpaceInfoViewModel.spaceAddress
+        val spcImage = youthSpaceInfoViewModel.spaceImage
+        val spcName = youthSpaceInfoViewModel.spaceName
+        val spcTime = youthSpaceInfoViewModel.spaceTime
+        val telNo = youthSpaceInfoViewModel.telephoneNumber
         RetrofitInstance.networkServiceBackEnd.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
             override fun onResponse(
                 call: Call<PositionResponse>,
@@ -58,8 +61,8 @@ class YouthSpaceDetailFragment : Fragment() {
             ) {
                 if(response.isSuccessful) {
                     val response = response.body()!!
-                    viewModel.spacePositionX = response.positionX
-                    viewModel.spacePositionY = response.positionY
+                    youthSpaceInfoViewModel.spacePositionX = response.positionX
+                    youthSpaceInfoViewModel.spacePositionY = response.positionY
 //                    Log.d("x,y =" ,"$positionX, $positionY")
                     showMapView()
                 }
@@ -76,6 +79,10 @@ class YouthSpaceDetailFragment : Fragment() {
             tvSpcTime.text = spcTime
             tvTelNo.text = telNo
         }
+        if(authenticationViewModel.isUserLoggedIn) {
+            binding.btnBookmark.visibility = View.VISIBLE
+        }
+        else binding.btnBookmark.visibility = View.GONE
     }
 
 
@@ -101,7 +108,7 @@ class YouthSpaceDetailFragment : Fragment() {
             }
 
             override fun getPosition(): LatLng {
-                return LatLng.from(viewModel.spacePositionY?.toDouble() ?:0.0, viewModel.spacePositionX?.toDouble() ?:0.0)
+                return LatLng.from(youthSpaceInfoViewModel.spacePositionY?.toDouble() ?:0.0, youthSpaceInfoViewModel.spacePositionX?.toDouble() ?:0.0)
             }
 
             override fun getZoomLevel(): Int {
@@ -111,7 +118,7 @@ class YouthSpaceDetailFragment : Fragment() {
     }
 
     private fun setMapContent() {
-        val latLng = LatLng.from(viewModel.spacePositionY!!.toDouble(), viewModel.spacePositionX!!.toDouble())
+        val latLng = LatLng.from(youthSpaceInfoViewModel.spacePositionY!!.toDouble(), youthSpaceInfoViewModel.spacePositionX!!.toDouble())
         kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 16))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }
@@ -125,6 +132,24 @@ class YouthSpaceDetailFragment : Fragment() {
         }
         binding.btnGoToUrl.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment)
+        }
+        binding.btnBookmark.setOnClickListener {
+            RetrofitInstance.networkServiceBackEnd.addFavoriteSpace(
+                token = authenticationViewModel.userToken!!,
+                registerFavoriteRequest = RegisterFavoriteRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
+            ).enqueue(object: Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if(response.isSuccessful) {
+                        Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
+                }
+
+            })
         }
     }
 

@@ -2,6 +2,7 @@ package com.example.youthspacefinder.network
 
 import AmenitiesResponse
 import PositionResponse
+import RegisterFavoriteRequest
 import SpacesInfoResponse
 import com.example.youthspacefinder.model.LoginUserInfo
 import com.example.youthspacefinder.model.RegisterUserInfo
@@ -83,4 +84,10 @@ interface NetworkService {
         @Path("reviewId") reviewId: Long,
         @Body modifyReviewRequest: ReviewRequest
     ): Call<ReviewResponse>
+
+    @POST("api/favorites/add")
+    fun addFavoriteSpace(
+        @Header("Authorization") token: String,
+        @Body registerFavoriteRequest: RegisterFavoriteRequest
+    ): Call<Any>
 }

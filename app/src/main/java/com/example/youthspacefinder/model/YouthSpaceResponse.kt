@@ -88,3 +88,7 @@ data class PositionResponse(
     @SerializedName("x") val positionX: String,
     @SerializedName("y") val positionY: String
 )
+
+data class RegisterFavoriteRequest(
+    val spaceId: Long
+)
