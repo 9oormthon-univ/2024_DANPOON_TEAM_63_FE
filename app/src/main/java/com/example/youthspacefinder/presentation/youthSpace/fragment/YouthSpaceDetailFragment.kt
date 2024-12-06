@@ -152,6 +152,7 @@ class YouthSpaceDetailFragment : Fragment() {
                         if(response.isSuccessful) {
                             isFavoriteSpace = false
                             binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.remove(youthSpaceInfoViewModel.spaceId!!.toLong())
                             Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
@@ -171,6 +172,7 @@ class YouthSpaceDetailFragment : Fragment() {
                         if(response.isSuccessful) {
                             isFavoriteSpace = true
                             binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.add(youthSpaceInfoViewModel.spaceId!!.toLong())
                             Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()

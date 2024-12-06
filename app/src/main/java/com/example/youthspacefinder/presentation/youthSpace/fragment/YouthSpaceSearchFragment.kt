@@ -1,6 +1,7 @@
 package com.example.youthspacefinder.presentation.youthSpace.fragment
 
 import SpacesInfoResponse
+import YouthSpace
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,7 +17,8 @@ import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceSearchBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.youthSpace.adapter.YouthSpaceListAdapter
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceFavoritesViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +26,9 @@ import retrofit2.Response
 class YouthSpaceSearchFragment : Fragment() {
 
     val binding by lazy { FragmentYouthSpaceSearchBinding.inflate(layoutInflater) }
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
+    val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
+    var youthSpaceList: List<YouthSpace>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,10 +53,10 @@ class YouthSpaceSearchFragment : Fragment() {
         binding.searchView.isSubmitButtonEnabled = true
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.d("searchView", query!!)
-                val regionCode = filterUserInput(query)
+                val regionCode = filterUserInput(query!!)
                 if (regionCode.isEmpty()) {
-                    Toast.makeText(requireContext(), "정확한 주소를 입력하지 않았습니다!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "정확한 주소를 입력하지 않았습니다!", Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     Log.d("searchView", regionCode)
                     networking(regionCode)
@@ -107,8 +111,15 @@ class YouthSpaceSearchFragment : Fragment() {
                 response: Response<SpacesInfoResponse>
             ) {
                 if (response.isSuccessful) {
-                    val data = response.body()!!.youthSpaces
-                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), viewModel, "YouthSpaceSearchFragment")
+                    Log.d("search", "server")
+                    youthSpaceList = response.body()!!.youthSpaces
+                    binding.recyclerview.adapter = YouthSpaceListAdapter(
+                        youthSpaceList!!,
+                        requireContext(),
+                        youthSpaceInfoViewModel,
+                        youthSpaceFavoritesViewModel,
+                        "YouthSpaceSearchFragment"
+                    )
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
@@ -119,6 +130,19 @@ class YouthSpaceSearchFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (youthSpaceList != null) {
+            binding.recyclerview.adapter = YouthSpaceListAdapter(
+                youthSpaceList!!,
+                requireContext(),
+                youthSpaceInfoViewModel,
+                youthSpaceFavoritesViewModel,
+                "YouthSpaceSearchFragment"
+            )
+        }
     }
 
 }
