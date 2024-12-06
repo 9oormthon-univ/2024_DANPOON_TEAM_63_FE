@@ -1,14 +1,13 @@
 package com.example.youthspacefinder.presentation.youthSpace.fragment
 
 import PositionResponse
-import RegisterFavoriteRequest
+import FavoriteSpaceRequest
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -82,10 +81,11 @@ class YouthSpaceDetailFragment : Fragment() {
             tvTelNo.text = telNo
         }
         if(authenticationViewModel.isUserLoggedIn) {
-            binding.btnBookmark.visibility = View.VISIBLE
+            binding.btnBookmarkAdd.visibility = View.VISIBLE
         }
         else {
-            binding.btnBookmark.visibility = View.GONE
+            binding.btnBookmarkAdd.visibility = View.GONE
+            binding.btnBookmarkDelete.visibility = View.GONE
             binding.ivFavorite.visibility = View.GONE
         }
         val isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
@@ -144,16 +144,34 @@ class YouthSpaceDetailFragment : Fragment() {
         binding.btnGoToUrl.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment)
         }
-        binding.btnBookmark.setOnClickListener {
+        binding.btnBookmarkAdd.setOnClickListener {
             RetrofitInstance.networkServiceBackEnd.addFavoriteSpace(
                 token = authenticationViewModel.userToken!!,
-                registerFavoriteRequest = RegisterFavoriteRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
+                favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
             ).enqueue(object: Callback<Any> {
                 override fun onResponse(call: Call<Any>, response: Response<Any>) {
                     if(response.isSuccessful) {
                         Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+        }
+        binding.btnBookmarkDelete.setOnClickListener {
+            RetrofitInstance.networkServiceBackEnd.removeFavoriteSpace(
+                token = authenticationViewModel.userToken!!,
+                favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
+            ).enqueue(object: Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if(response.isSuccessful) {
+                        Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: Call<Any>, t: Throwable) {

@@ -2,7 +2,7 @@ package com.example.youthspacefinder.network
 
 import AmenitiesResponse
 import PositionResponse
-import RegisterFavoriteRequest
+import FavoriteSpaceRequest
 import SpacesInfoResponse
 import com.example.youthspacefinder.model.FavoriteSpaceResponse
 import com.example.youthspacefinder.model.LoginUserInfo
@@ -16,6 +16,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -89,11 +90,17 @@ interface NetworkService {
     @POST("api/favorites/add")
     fun addFavoriteSpace(
         @Header("Authorization") token: String,
-        @Body registerFavoriteRequest: RegisterFavoriteRequest
+        @Body favoriteSpaceRequest: FavoriteSpaceRequest
     ): Call<Any>
 
     @GET("api/favorites/get")
     fun getFavoriteSpaceList(
         @Header("Authorization") token: String
     ): Call<FavoriteSpaceResponse>
+
+    @HTTP(method = "DELETE", path = "api/favorites/remove", hasBody = true)
+    fun removeFavoriteSpace(
+        @Header("Authorization") token: String,
+        @Body favoriteSpaceRequest: FavoriteSpaceRequest
+    ): Call<Any>
 }
