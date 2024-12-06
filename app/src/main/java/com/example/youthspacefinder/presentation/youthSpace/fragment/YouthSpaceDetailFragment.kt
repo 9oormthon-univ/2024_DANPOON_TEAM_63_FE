@@ -34,6 +34,7 @@ class YouthSpaceDetailFragment : Fragment() {
     val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
+    var isFavoriteSpace: Boolean? = null
     private var kakaoMap: KakaoMap? = null
 
     override fun onCreateView(
@@ -81,19 +82,14 @@ class YouthSpaceDetailFragment : Fragment() {
             tvTelNo.text = telNo
         }
         if(authenticationViewModel.isUserLoggedIn) {
-            binding.btnBookmarkAdd.visibility = View.VISIBLE
+            binding.ivFavorite.visibility = View.VISIBLE
         }
         else {
-            binding.btnBookmarkAdd.visibility = View.GONE
-            binding.btnBookmarkDelete.visibility = View.GONE
             binding.ivFavorite.visibility = View.GONE
         }
-        val isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
-        if(isFavoriteSpace == true) {
-            binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
-        } else {
-            binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
-        }
+        isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
+        if(isFavoriteSpace == true) binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+        else binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
     }
 
 
@@ -144,41 +140,48 @@ class YouthSpaceDetailFragment : Fragment() {
         binding.btnGoToUrl.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment)
         }
-        binding.btnBookmarkAdd.setOnClickListener {
-            RetrofitInstance.networkServiceBackEnd.addFavoriteSpace(
-                token = authenticationViewModel.userToken!!,
-                favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
-            ).enqueue(object: Callback<Any> {
-                override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                    if(response.isSuccessful) {
-                        Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
-                }
 
-            })
-        }
-        binding.btnBookmarkDelete.setOnClickListener {
-            RetrofitInstance.networkServiceBackEnd.removeFavoriteSpace(
-                token = authenticationViewModel.userToken!!,
-                favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
-            ).enqueue(object: Callback<Any> {
-                override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                    if(response.isSuccessful) {
-                        Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
+        binding.ivFavorite.setOnClickListener {
+            if(isFavoriteSpace == true) {
+                // 삭제
+                RetrofitInstance.networkServiceBackEnd.removeFavoriteSpace(
+                    token = authenticationViewModel.userToken!!,
+                    favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
+                ).enqueue(object: Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        if(response.isSuccessful) {
+                            isFavoriteSpace = false
+                            binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
+                            Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-                override fun onFailure(call: Call<Any>, t: Throwable) {
-                    Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
-                }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                // 추가
+                RetrofitInstance.networkServiceBackEnd.addFavoriteSpace(
+                    token = authenticationViewModel.userToken!!,
+                    favoriteSpaceRequest = FavoriteSpaceRequest(youthSpaceInfoViewModel.spaceId!!.toLong())
+                ).enqueue(object: Callback<Any> {
+                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                        if(response.isSuccessful) {
+                            isFavoriteSpace = true
+                            binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+                            Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun onFailure(call: Call<Any>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버가 불안정합니다!", Toast.LENGTH_SHORT).show()
+                    }
 
-            })
+                })
+            }
         }
     }
 
