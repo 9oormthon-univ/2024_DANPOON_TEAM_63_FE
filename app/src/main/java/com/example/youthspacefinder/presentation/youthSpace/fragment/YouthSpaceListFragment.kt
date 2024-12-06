@@ -13,9 +13,11 @@ import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceListBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.Utils
+import com.example.youthspacefinder.model.FavoriteSpaceResponse
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
 import com.example.youthspacefinder.presentation.youthSpace.adapter.YouthSpaceListAdapter
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceFavoritesViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,8 +25,9 @@ import retrofit2.Response
 class YouthSpaceListFragment : Fragment() {
 
     val binding by lazy { FragmentYouthSpaceListBinding.inflate(layoutInflater) }
-    val youthSpaceViewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
+    val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +59,7 @@ class YouthSpaceListFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()!!.youthSpaces
-                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), youthSpaceViewModel, "YouthSpaceListFragment")
+                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), youthSpaceInfoViewModel, "YouthSpaceListFragment")
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
@@ -67,6 +70,28 @@ class YouthSpaceListFragment : Fragment() {
             }
 
         })
+        if(authenticationViewModel.isUserLoggedIn) {
+            // 로그인 상태일 때 해당 유저가 추가한 청년공간 즐겨찾기 리스트 조회하기
+            RetrofitInstance.networkServiceBackEnd.getFavoriteSpaceList(
+                token = authenticationViewModel.userToken!!
+            ).enqueue(object: Callback<FavoriteSpaceResponse> {
+                override fun onResponse(
+                    call: Call<FavoriteSpaceResponse>,
+                    response: Response<FavoriteSpaceResponse>
+                ) {
+                    if(response.isSuccessful) {
+                        val response = response.body()
+                        val favoriteSpaces = response?.favoriteSpaces
+                        youthSpaceFavoritesViewModel.userFavoriteSpaces = favoriteSpaces
+                    }
+                }
+
+                override fun onFailure(call: Call<FavoriteSpaceResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
     }
 
     private fun initSearchView() {

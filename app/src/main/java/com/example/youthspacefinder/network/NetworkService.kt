@@ -4,6 +4,7 @@ import AmenitiesResponse
 import PositionResponse
 import RegisterFavoriteRequest
 import SpacesInfoResponse
+import com.example.youthspacefinder.model.FavoriteSpaceResponse
 import com.example.youthspacefinder.model.LoginUserInfo
 import com.example.youthspacefinder.model.RegisterUserInfo
 import com.example.youthspacefinder.model.ReviewRequest
@@ -90,4 +91,9 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Body registerFavoriteRequest: RegisterFavoriteRequest
     ): Call<Any>
+
+    @GET("api/favorites/get")
+    fun getFavoriteSpaceList(
+        @Header("Authorization") token: String
+    ): Call<FavoriteSpaceResponse>
 }

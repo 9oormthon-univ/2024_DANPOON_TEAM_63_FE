@@ -18,6 +18,7 @@ import com.example.youthspacefinder.databinding.FragmentYouthSpaceDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceFavoritesViewModel
 import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
@@ -33,6 +34,7 @@ class YouthSpaceDetailFragment : Fragment() {
     val binding by lazy { FragmentYouthSpaceDetailBinding.inflate(layoutInflater) }
     val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
+    val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
     private var kakaoMap: KakaoMap? = null
 
     override fun onCreateView(
@@ -82,7 +84,16 @@ class YouthSpaceDetailFragment : Fragment() {
         if(authenticationViewModel.isUserLoggedIn) {
             binding.btnBookmark.visibility = View.VISIBLE
         }
-        else binding.btnBookmark.visibility = View.GONE
+        else {
+            binding.btnBookmark.visibility = View.GONE
+            binding.ivFavorite.visibility = View.GONE
+        }
+        val isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
+        if(isFavoriteSpace == true) {
+            binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
+        } else {
+            binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
+        }
     }
 
 
