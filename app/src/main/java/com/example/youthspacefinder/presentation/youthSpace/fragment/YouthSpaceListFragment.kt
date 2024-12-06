@@ -44,42 +44,22 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun initView() {
-        if(authenticationViewModel.isUserLoggedIn) binding.ivAuthentication.visibility = View.INVISIBLE
+        if (authenticationViewModel.isUserLoggedIn) binding.ivAuthentication.visibility = View.INVISIBLE
         else binding.ivAuthentication.visibility = View.VISIBLE
         networking()
     }
 
     private fun networking() {
-        RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
-            apiKey = Utils.YOUTH_OPEN_API_KEY
-        ).enqueue(object : Callback<SpacesInfoResponse> {
-            override fun onResponse(
-                call: Call<SpacesInfoResponse>,
-                response: Response<SpacesInfoResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val data = response.body()!!.youthSpaces
-                    binding.recyclerview.adapter = YouthSpaceListAdapter(data, requireContext(), youthSpaceInfoViewModel, "YouthSpaceListFragment")
-                } else {
-                    Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
-                }
-            }
-
-            override fun onFailure(call: Call<SpacesInfoResponse>, t: Throwable) {
-                Log.e("API_FAILURE", "Failure: ${t.message}")
-            }
-
-        })
-        if(authenticationViewModel.isUserLoggedIn) {
+        if (authenticationViewModel.isUserLoggedIn) {
             // 로그인 상태일 때 해당 유저가 추가한 청년공간 즐겨찾기 리스트 조회하기
             RetrofitInstance.networkServiceBackEnd.getFavoriteSpaceList(
                 token = authenticationViewModel.userToken!!
-            ).enqueue(object: Callback<FavoriteSpaceResponse> {
+            ).enqueue(object : Callback<FavoriteSpaceResponse> {
                 override fun onResponse(
                     call: Call<FavoriteSpaceResponse>,
                     response: Response<FavoriteSpaceResponse>
                 ) {
-                    if(response.isSuccessful) {
+                    if (response.isSuccessful) {
                         val response = response.body()
                         val favoriteSpaces = response?.favoriteSpaces
                         youthSpaceFavoritesViewModel.userFavoriteSpaces = favoriteSpaces
@@ -92,11 +72,36 @@ class YouthSpaceListFragment : Fragment() {
 
             })
         }
+        RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
+            apiKey = Utils.YOUTH_OPEN_API_KEY
+        ).enqueue(object : Callback<SpacesInfoResponse> {
+            override fun onResponse(
+                call: Call<SpacesInfoResponse>,
+                response: Response<SpacesInfoResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()!!.youthSpaces
+                    binding.recyclerview.adapter = YouthSpaceListAdapter(
+                        data,
+                        requireContext(),
+                        youthSpaceInfoViewModel,
+                        youthSpaceFavoritesViewModel,
+                        "YouthSpaceListFragment"
+                    )
+                } else {
+                    Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: Call<SpacesInfoResponse>, t: Throwable) {
+                Log.e("API_FAILURE", "Failure: ${t.message}")
+            }
+        })
     }
 
     private fun initSearchView() {
         binding.searchView.setOnQueryTextFocusChangeListener { view, hasFocus ->
-            if(hasFocus) {
+            if (hasFocus) {
                 findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceSearchFragment)
             }
         }
@@ -110,7 +115,7 @@ class YouthSpaceListFragment : Fragment() {
             findNavController().navigate(R.id.action_youthSpaceListFragment_to_loginFragment)
         }
         binding.ivUserProfile.setOnClickListener {
-            if(authenticationViewModel.isUserLoggedIn) {
+            if (authenticationViewModel.isUserLoggedIn) {
                 findNavController().navigate(R.id.action_youthSpaceListFragment_to_settingsUserLoggedInFragment)
             } else {
                 findNavController().navigate(R.id.action_youthSpaceListFragment_to_settingsUserLoggedOutFragment)

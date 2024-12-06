@@ -57,5 +57,10 @@
                 android:textSize="10sp"
                 tools:text="청년 공간 운영시간" />
         </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_favorite_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_favorite"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
