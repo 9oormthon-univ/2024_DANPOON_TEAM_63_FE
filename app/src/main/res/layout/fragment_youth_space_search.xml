@@ -46,6 +46,31 @@
         android:layout_weight="1"
         android:padding="16dp"
         tools:listitem="@layout/item_youth_space"
+        tools:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <LinearLayout
+        android:id="@+id/ll_search_list_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp"
+            android:src="@drawable/ic_alert" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="해당 지역에 대한 공간이 조회되지 않습니다."
+            android:textAlignment="center"
+            android:textColor="#4F4F4F" />
+    </LinearLayout>
 
 </LinearLayout>

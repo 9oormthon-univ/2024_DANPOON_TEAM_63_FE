@@ -113,13 +113,20 @@ class YouthSpaceSearchFragment : Fragment() {
                 if (response.isSuccessful) {
                     Log.d("search", "server")
                     youthSpaceList = response.body()!!.youthSpaces
-                    binding.recyclerview.adapter = YouthSpaceListAdapter(
-                        youthSpaceList!!,
-                        requireContext(),
-                        youthSpaceInfoViewModel,
-                        youthSpaceFavoritesViewModel,
-                        "YouthSpaceSearchFragment"
-                    )
+                    if(youthSpaceList?.isEmpty() == true) {
+                       binding.recyclerview.visibility = View.GONE
+                       binding.llSearchListEmpty.visibility = View.VISIBLE
+                    } else {
+                        binding.llSearchListEmpty.visibility = View.GONE
+                        binding.recyclerview.adapter = YouthSpaceListAdapter(
+                            youthSpaceList!!,
+                            requireContext(),
+                            youthSpaceInfoViewModel,
+                            youthSpaceFavoritesViewModel,
+                            "YouthSpaceSearchFragment"
+                        )
+                        binding.recyclerview.visibility = View.VISIBLE
+                    }
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
