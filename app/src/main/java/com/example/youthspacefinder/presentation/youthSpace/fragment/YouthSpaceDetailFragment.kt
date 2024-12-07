@@ -154,17 +154,10 @@ class YouthSpaceDetailFragment : Fragment() {
                             isFavoriteSpace = false
                             binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
                             youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.remove(youthSpaceInfoViewModel.spaceId!!.toLong())
-                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.remove(
-                                YouthSpace(
-                                    address = youthSpaceInfoViewModel.spaceAddress!!,
-                                    spcName = youthSpaceInfoViewModel.spaceName!!,
-                                    spcTime = youthSpaceInfoViewModel.spcTime!!,
-                                    telNo = youthSpaceInfoViewModel.telephoneNumber!!,
-                                    spcId = youthSpaceInfoViewModel.spaceId!!,
-                                    homepage = youthSpaceInfoViewModel.homepageUrl!!,
-                                    officeHours = youthSpaceInfoViewModel.officeHours!!
-                                )
-                            )
+                            val removeBookmarkSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces.find {
+                                it.spcId == youthSpaceInfoViewModel.spaceId
+                            }
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces.remove(removeBookmarkSpace)
                             Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
