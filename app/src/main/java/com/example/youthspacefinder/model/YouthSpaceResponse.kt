@@ -20,7 +20,7 @@ data class SpacesInfoResponse(
 @Xml(name = "space")
 data class YouthSpace(
     @PropertyElement(name = "rownum")
-    val rownum: Int,
+    val rownum: Int = 0,
 
     @PropertyElement(name = "spcId")
     val spcId: String,
@@ -29,19 +29,19 @@ data class YouthSpace(
     val spcName: String,
 
     @PropertyElement(name = "areaCpvn")
-    val areaCpvn: String,
+    val areaCpvn: String = "",
 
     @PropertyElement(name = "areaSggn")
-    val areaSggn: String,
+    val areaSggn: String = "",
 
     @PropertyElement(name = "address")
     val address: String,
 
     @PropertyElement(name = "spcTime")
-    val spcTime: String,
+    val spcTime: String, // 정보가 더 자세함
 
     @PropertyElement(name = "operOrgan")
-    val operOrgan: String,
+    val operOrgan: String = "",
 
     @PropertyElement(name = "homepage")
     val homepage: String,
@@ -50,28 +50,28 @@ data class YouthSpace(
     val telNo: String,
 
     @PropertyElement(name = "officeHours")
-    val officeHours: String,
+    val officeHours: String, // 정보가 간략함 (spcTime 에 비해)
 
     @PropertyElement(name = "openDate")
-    val openDate: String,
+    val openDate: String = "",
 
     @PropertyElement(name = "applyTarget")
-    val applyTarget: String,
+    val applyTarget: String = "",
 
     @PropertyElement(name = "spcType")
-    val spcType: String,
+    val spcType: String = "",
 
     @PropertyElement(name = "majorForm")
-    val majorForm: String,
+    val majorForm: String = "",
 
     @PropertyElement(name = "spcCost")
-    val spcCost: String,
+    val spcCost: String = "",
 
     @PropertyElement(name = "addFacilCost")
-    val addFacilCost: String,
+    val addFacilCost: String = "",
 
     @PropertyElement(name = "foodYn")
-    val foodYn: String
+    val foodYn: String = "",
 )
 
 @Parcelize
@@ -89,6 +89,6 @@ data class PositionResponse(
     @SerializedName("y") val positionY: String
 )
 
-data class RegisterFavoriteRequest(
+data class FavoriteSpaceRequest(
     val spaceId: Long
 )

@@ -17,7 +17,7 @@ import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpace
 import kotlin.random.Random
 
 class YouthSpaceListAdapter(
-    val youthYouthSpaceItems: List<YouthSpace>,
+    val youthSpaceItems: List<YouthSpace>,
     val context: Context,
     val youthSpaceInfoViewModel: YouthSpaceInfoViewModel,
     val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel,
@@ -45,37 +45,45 @@ class YouthSpaceListAdapter(
     }
 
     override fun getItemCount(): Int {
-        return youthYouthSpaceItems.size
+        return youthSpaceItems.size
     }
 
     override fun onBindViewHolder(holder: YouthSpaceViewHolder, position: Int) {
         val randomImage = Utils.youthSpaceImageList[Random.nextInt(Utils.youthSpaceImageList.size)]
         Glide.with(context).load(randomImage).into(holder.spaceImage)
-        holder.spaceName.text = youthYouthSpaceItems[position].spcName
-        holder.spaceAddress.text = youthYouthSpaceItems[position].address
-        holder.spaceOperateTime.text = youthYouthSpaceItems[position].officeHours
-        val positionSpaceId = youthYouthSpaceItems[position].spcId.toLong()
-        if(youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(positionSpaceId) == true) {
+        holder.spaceName.text = youthSpaceItems[position].spcName
+        holder.spaceAddress.text = youthSpaceItems[position].address
+        holder.spaceOperateTime.text = youthSpaceItems[position].officeHours
+
+        val positionSpaceId = youthSpaceItems[position].spcId.toLong()
+        if(youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.contains(positionSpaceId) == true) {
             holder.favoriteSpaceBookmark.visibility = View.VISIBLE
         } else {
             holder.favoriteSpaceBookmark.visibility = View.INVISIBLE // gone 으로 처리하면 청년 공간에 대한 content 가 길 경우 레이아웃 배치가 안맞을 것 같음 → invisible 로 처리
         }
+
         holder.itemView.setOnClickListener { view ->
+            // 실질적으로 쓰는 데이터
+            youthSpaceInfoViewModel.spaceAddress = youthSpaceItems[position].address
             youthSpaceInfoViewModel.spaceImage = randomImage
-            youthSpaceInfoViewModel.spaceName = youthYouthSpaceItems[position].spcName
-            youthSpaceInfoViewModel.spaceId = youthYouthSpaceItems[position].spcId
-            youthSpaceInfoViewModel.spaceAddress = youthYouthSpaceItems[position].address
-            youthSpaceInfoViewModel.spaceTime = youthYouthSpaceItems[position].spcTime
-            youthSpaceInfoViewModel.operateOrgan =  youthYouthSpaceItems[position].operOrgan
-            youthSpaceInfoViewModel.homepageUrl = youthYouthSpaceItems[position].homepage
-            youthSpaceInfoViewModel.telephoneNumber = youthYouthSpaceItems[position].telNo
-            youthSpaceInfoViewModel.spaceOpenDate = youthYouthSpaceItems[position].openDate
-            youthSpaceInfoViewModel.applyTarget = youthYouthSpaceItems[position].applyTarget
-            youthSpaceInfoViewModel.spaceCost = youthYouthSpaceItems[position].spcCost
-            youthSpaceInfoViewModel.foodYn = youthYouthSpaceItems[position].foodYn
+            youthSpaceInfoViewModel.spaceName = youthSpaceItems[position].spcName
+            youthSpaceInfoViewModel.spcTime = youthSpaceItems[position].spcTime
+            youthSpaceInfoViewModel.telephoneNumber = youthSpaceItems[position].telNo
+            youthSpaceInfoViewModel.spaceId = youthSpaceItems[position].spcId
+            youthSpaceInfoViewModel.homepageUrl = youthSpaceItems[position].homepage
+            youthSpaceInfoViewModel.officeHours = youthSpaceItems[position].officeHours
+
+            // 실질적으로 쓰지 않는 데이터
+            youthSpaceInfoViewModel.operateOrgan =  youthSpaceItems[position].operOrgan
+            youthSpaceInfoViewModel.spaceOpenDate = youthSpaceItems[position].openDate
+            youthSpaceInfoViewModel.applyTarget = youthSpaceItems[position].applyTarget
+            youthSpaceInfoViewModel.spaceCost = youthSpaceItems[position].spcCost
+            youthSpaceInfoViewModel.foodYn = youthSpaceItems[position].foodYn
+
             when(startFragmentTag) {
                 "YouthSpaceListFragment" -> view.findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceDetailFragment)
                 "YouthSpaceSearchFragment" -> view.findNavController().navigate(R.id.action_youthSpaceSearchFragment_to_youthSpaceDetailFragment)
+                "YouthSpaceBookmarkFragment" -> view.findNavController().navigate(R.id.action_youthSpaceBookmarkFragment_to_youthSpaceDetailFragment)
             }
         }
     }

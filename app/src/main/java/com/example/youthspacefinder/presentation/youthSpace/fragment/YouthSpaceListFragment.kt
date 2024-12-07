@@ -29,23 +29,41 @@ class YouthSpaceListFragment : Fragment() {
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
     val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("list fragment","onCreate")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("list fragment","onCreateView")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("list fragment","onViewCreated")
         setupListeners()
         initView()
         initSearchView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("list fragment","onResume")
+    }
+
     private fun initView() {
-        if (authenticationViewModel.isUserLoggedIn) binding.ivAuthentication.visibility = View.INVISIBLE
-        else binding.ivAuthentication.visibility = View.VISIBLE
+        if (authenticationViewModel.isUserLoggedIn) {
+            binding.ivAuthentication.visibility = View.GONE
+            binding.ivBookmark.visibility = View.VISIBLE
+        }
+        else {
+            binding.ivAuthentication.visibility = View.VISIBLE
+            binding.ivBookmark.visibility = View.GONE
+        }
         networking()
     }
 
@@ -61,8 +79,8 @@ class YouthSpaceListFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         val response = response.body()
-                        val favoriteSpaces = response?.favoriteSpaces
-                        youthSpaceFavoritesViewModel.userFavoriteSpaces = favoriteSpaces
+                        val favoriteSpaceIds = response?.favoriteSpaceIds
+                        youthSpaceFavoritesViewModel.userFavoriteSpaceIds = favoriteSpaceIds
                     }
                 }
 
@@ -120,6 +138,9 @@ class YouthSpaceListFragment : Fragment() {
             } else {
                 findNavController().navigate(R.id.action_youthSpaceListFragment_to_settingsUserLoggedOutFragment)
             }
+        }
+        binding.ivBookmark.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceListFragment_to_youthSpaceBookmarkFragment)
         }
     }
 

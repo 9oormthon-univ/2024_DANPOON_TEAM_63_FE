@@ -2,6 +2,7 @@ package com.example.youthspacefinder.presentation.youthSpace.fragment
 
 import PositionResponse
 import FavoriteSpaceRequest
+import YouthSpace
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -54,7 +55,7 @@ class YouthSpaceDetailFragment : Fragment() {
         val address = youthSpaceInfoViewModel.spaceAddress
         val spcImage = youthSpaceInfoViewModel.spaceImage
         val spcName = youthSpaceInfoViewModel.spaceName
-        val spcTime = youthSpaceInfoViewModel.spaceTime
+        val spcTime = youthSpaceInfoViewModel.spcTime
         val telNo = youthSpaceInfoViewModel.telephoneNumber
         RetrofitInstance.networkServiceBackEnd.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
             override fun onResponse(
@@ -87,7 +88,7 @@ class YouthSpaceDetailFragment : Fragment() {
         else {
             binding.ivFavorite.visibility = View.GONE
         }
-        isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaces?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
+        isFavoriteSpace = youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.contains(youthSpaceInfoViewModel.spaceId!!.toLong())
         if(isFavoriteSpace == true) binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
         else binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
     }
@@ -152,7 +153,18 @@ class YouthSpaceDetailFragment : Fragment() {
                         if(response.isSuccessful) {
                             isFavoriteSpace = false
                             binding.ivFavorite.setImageResource(R.drawable.ic_unfavorite)
-                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.remove(youthSpaceInfoViewModel.spaceId!!.toLong())
+                            youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.remove(youthSpaceInfoViewModel.spaceId!!.toLong())
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.remove(
+                                YouthSpace(
+                                    address = youthSpaceInfoViewModel.spaceAddress!!,
+                                    spcName = youthSpaceInfoViewModel.spaceName!!,
+                                    spcTime = youthSpaceInfoViewModel.spcTime!!,
+                                    telNo = youthSpaceInfoViewModel.telephoneNumber!!,
+                                    spcId = youthSpaceInfoViewModel.spaceId!!,
+                                    homepage = youthSpaceInfoViewModel.homepageUrl!!,
+                                    officeHours = youthSpaceInfoViewModel.officeHours!!
+                                )
+                            )
                             Toast.makeText(requireContext(), "즐겨찾기에서 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(requireContext(), "이미 삭제 되었습니다!", Toast.LENGTH_SHORT).show()
@@ -172,7 +184,18 @@ class YouthSpaceDetailFragment : Fragment() {
                         if(response.isSuccessful) {
                             isFavoriteSpace = true
                             binding.ivFavorite.setImageResource(R.drawable.ic_favorite)
-                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.add(youthSpaceInfoViewModel.spaceId!!.toLong())
+                            youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.add(youthSpaceInfoViewModel.spaceId!!.toLong())
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces?.add(
+                                YouthSpace(
+                                    address = youthSpaceInfoViewModel.spaceAddress!!,
+                                    spcName = youthSpaceInfoViewModel.spaceName!!,
+                                    spcTime = youthSpaceInfoViewModel.spcTime!!,
+                                    telNo = youthSpaceInfoViewModel.telephoneNumber!!,
+                                    spcId = youthSpaceInfoViewModel.spaceId!!,
+                                    homepage = youthSpaceInfoViewModel.homepageUrl!!,
+                                    officeHours = youthSpaceInfoViewModel.officeHours!!
+                                )
+                            )
                             Toast.makeText(requireContext(), "즐겨찾기에 등록되었습니다!", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(requireContext(), "이미 즐겨찾기에 등록되어있습니다!", Toast.LENGTH_SHORT).show()

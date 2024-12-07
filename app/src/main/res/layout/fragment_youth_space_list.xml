@@ -18,11 +18,31 @@
 
         <ImageView
             android:id="@+id/iv_user_profile"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_profile"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_user_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_bookmark"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_bookmark"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_user_profile"
+            app:layout_constraintTop_toTopOf="@id/iv_user_profile"
+            app:layout_constraintBottom_toBottomOf="@id/iv_user_profile"/>
+
+        <ImageView
+            android:id="@+id/iv_authentication"
+            android:layout_width="36dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_authentication"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/iv_bookmark"
+            app:layout_constraintTop_toTopOf="@id/iv_bookmark"
+            app:layout_constraintBottom_toBottomOf="@id/iv_bookmark" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -32,7 +52,7 @@
             app:cardCornerRadius="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/iv_authentication">
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchView"
@@ -47,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="청년 공간 탐색 도우미\n청공이 더 쉽게 알려주는 청년 공간"
             android:textColor="@color/white"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@id/cardView"
             app:layout_constraintStart_toStartOf="@+id/cardView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
