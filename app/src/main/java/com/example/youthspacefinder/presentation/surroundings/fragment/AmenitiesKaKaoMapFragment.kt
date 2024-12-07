@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentAmenitiesKaKaoMapBinding
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -26,7 +26,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
 
     private val binding by lazy { FragmentAmenitiesKaKaoMapBinding.inflate(layoutInflater) }
     private var kakaoMap: KakaoMap? = null
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +58,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 kakaoMap = kakaomap
                 setYouthSpacePosition()
-                viewModel.amenities!!.forEach {
+                youthSpaceInfoViewModel.amenities!!.forEach {
                     setAmenitiesPosition(it.positionX, it.positionY, it.placeUrl)
                 }
                 setLabelClickListener()
@@ -67,7 +67,7 @@ class AmenitiesKaKaoMapFragment : Fragment() {
     }
 
     private fun setYouthSpacePosition() {
-        val latLng = LatLng.from(viewModel.spacePositionY!!.toDouble(), viewModel.spacePositionX!!.toDouble())
+        val latLng = LatLng.from(youthSpaceInfoViewModel.spacePositionY!!.toDouble(), youthSpaceInfoViewModel.spacePositionX!!.toDouble())
         kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 17))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }

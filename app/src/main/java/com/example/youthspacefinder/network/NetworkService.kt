@@ -34,9 +34,10 @@ interface NetworkService {
         @Query("pageType") pageType: Int = 1
     ): Call<SpacesInfoResponse>
 
-    @GET("api/search-food")
+    @GET("api/search-facilities")
     fun getAmenitiesList(
-        @Query("address") address: String
+        @Query("address") address: String,
+        @Query("category") category: String
     ): Call<List<AmenitiesResponse>>
 
     @GET("api/search-position")

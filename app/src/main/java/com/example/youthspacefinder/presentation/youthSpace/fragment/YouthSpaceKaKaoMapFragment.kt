@@ -6,15 +6,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
+import com.example.youthspacefinder.Utils
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceKaoKaoMapBinding
 import com.example.youthspacefinder.network.RetrofitInstance
-import com.example.youthspacefinder.Utils
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -24,12 +23,11 @@ import com.kakao.vectormap.label.LabelOptions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 
 class YouthSpaceKaKaoMapFragment : Fragment() {
 
     val binding by lazy { FragmentYouthSpaceKaoKaoMapBinding.inflate(layoutInflater) }
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val youthSpaceInfoViewModel: YouthSpaceInfoViewModel by activityViewModels()
     private var kakaoMap: KakaoMap? = null
 
     override fun onCreateView(
@@ -41,20 +39,23 @@ class YouthSpaceKaKaoMapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val spaceName = viewModel.spaceName
+        val spaceName = youthSpaceInfoViewModel.spaceName
         showMapView()
         binding.tvYouthSpaceName.text = spaceName
         // retrofit
-        RetrofitInstance.networkServiceBackEnd.getAmenitiesList(viewModel.spaceAddress!!).enqueue(object:
+        RetrofitInstance.networkServiceBackEndLocationController.getAmenitiesList(
+            address = youthSpaceInfoViewModel.spaceAddress!!,
+            category = Utils.TAG_RESTAURANT
+        ).enqueue(object:
             Callback<List<AmenitiesResponse>> {
             override fun onResponse(
                 call: Call<List<AmenitiesResponse>>,
                 response: Response<List<AmenitiesResponse>>
             ) {
                 if(response.isSuccessful) {
-                    viewModel.amenities = response.body()!!
-                    Log.d("size",viewModel.amenities!!.size.toString())
-                    binding.tvSurroundNumber.text = "추천맛집 ${viewModel.amenities!!.size}건"
+                    youthSpaceInfoViewModel.amenities = response.body()!!
+                    Log.d("ttest",youthSpaceInfoViewModel.amenities!!.size.toString())
+                    binding.tvSurroundNumber.text = "추천맛집 ${youthSpaceInfoViewModel.amenities!!.size}건"
                 } else {
                     Log.e("API_ERROR", "Error: ${response.errorBody()?.string()}")
                 }
@@ -89,13 +90,13 @@ class YouthSpaceKaKaoMapFragment : Fragment() {
             }
 
             override fun getPosition(): LatLng {
-                return LatLng.from(viewModel.spacePositionY?.toDouble() ?:0.0, viewModel.spacePositionX?.toDouble() ?:0.0)
+                return LatLng.from(youthSpaceInfoViewModel.spacePositionY?.toDouble() ?:0.0, youthSpaceInfoViewModel.spacePositionX?.toDouble() ?:0.0)
             }
         })
     }
 
     private fun setMapContent() {
-        val latLng = LatLng.from(viewModel.spacePositionY!!.toDouble(), viewModel.spacePositionX!!.toDouble())
+        val latLng = LatLng.from(youthSpaceInfoViewModel.spacePositionY!!.toDouble(), youthSpaceInfoViewModel.spacePositionX!!.toDouble())
         kakaoMap!!.moveCamera(CameraUpdateFactory.newCenterPosition(latLng, 16))
         kakaoMap!!.labelManager!!.layer!!.addLabel(LabelOptions.from(latLng).setStyles(Utils.setPinStyle(false)))
     }

@@ -57,7 +57,9 @@ class YouthSpaceDetailFragment : Fragment() {
         val spcName = youthSpaceInfoViewModel.spaceName
         val spcTime = youthSpaceInfoViewModel.spcTime
         val telNo = youthSpaceInfoViewModel.telephoneNumber
-        RetrofitInstance.networkServiceBackEnd.getLocationXY(address!!).enqueue(object : Callback<PositionResponse> {
+        RetrofitInstance.networkServiceBackEndLocationController.getLocationXY(
+            address = address!!
+        ).enqueue(object : Callback<PositionResponse> {
             override fun onResponse(
                 call: Call<PositionResponse>,
                 response: Response<PositionResponse>
@@ -66,7 +68,7 @@ class YouthSpaceDetailFragment : Fragment() {
                     val response = response.body()!!
                     youthSpaceInfoViewModel.spacePositionX = response.positionX
                     youthSpaceInfoViewModel.spacePositionY = response.positionY
-//                    Log.d("x,y =" ,"$positionX, $positionY")
+                    Log.d("x,y =" ,"${youthSpaceInfoViewModel.spacePositionX}, ${youthSpaceInfoViewModel.spacePositionY}")
                     showMapView()
                 }
             }
@@ -80,7 +82,7 @@ class YouthSpaceDetailFragment : Fragment() {
             tvSpcName.text = spcName
             tvAddress.text = address
             tvSpcTime.text = spcTime
-            tvTelNo.text = telNo
+            if(telNo != "null") tvTelNo.text = telNo else tvTelNo.text = "해당 공간은 연락처를 제공하지 않습니다."
         }
         if(authenticationViewModel.isUserLoggedIn) {
             binding.ivFavorite.visibility = View.VISIBLE

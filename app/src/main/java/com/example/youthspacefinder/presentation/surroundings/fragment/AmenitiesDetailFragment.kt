@@ -1,4 +1,4 @@
-package com.example.youthspacefinder.presentation.surroundings
+package com.example.youthspacefinder.presentation.surroundings.fragment
 
 import AmenitiesResponse
 import android.os.Bundle
@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentAmenitiesDetailBinding
 import com.example.youthspacefinder.network.RetrofitInstance
+import com.example.youthspacefinder.presentation.surroundings.adapter.AmenitiesListDetailAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +29,10 @@ class AmenitiesDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val address = requireArguments().getString("address")
-        RetrofitInstance.networkServiceAmenities.getAmenitiesList(address!!).enqueue(object:
+        RetrofitInstance.networkServiceBackEndLocationController.getAmenitiesList(
+            address = address!!,
+            category = "FD6"
+        ).enqueue(object:
             Callback<List<AmenitiesResponse>> {
             override fun onResponse(
                 call: Call<List<AmenitiesResponse>>,

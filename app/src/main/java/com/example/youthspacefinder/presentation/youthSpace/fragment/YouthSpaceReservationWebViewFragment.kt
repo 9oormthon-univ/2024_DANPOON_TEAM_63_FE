@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
-import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceReservationWebViewBinding
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.MainActivity

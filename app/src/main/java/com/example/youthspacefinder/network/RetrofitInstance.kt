@@ -11,6 +11,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 object RetrofitInstance {
     private const val BASE_URL_OPEN_API = "https://www.youthcenter.go.kr/"
     private const val BASE_URL_BACK_END = "http://13.125.8.99:8080/"
+    private const val BASE_URL_BACK_END_LOCATION_CONTROLLER = "http://3.34.141.62:8080/"
 
     val networkServiceOpenAPI: NetworkService by lazy {
         Retrofit.Builder()
@@ -27,6 +28,15 @@ object RetrofitInstance {
     val networkServiceBackEnd: NetworkService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL_BACK_END)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(lenientGson))
+            .build()
+            .create(NetworkService::class.java)
+    }
+
+    val networkServiceBackEndLocationController: NetworkService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL_BACK_END_LOCATION_CONTROLLER)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(GsonConverterFactory.create(lenientGson))
             .build()

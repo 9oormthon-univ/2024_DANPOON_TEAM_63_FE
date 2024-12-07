@@ -6,14 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentYouthSpaceWebViewBinding
-import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceInfoViewModel
 
 class YouthSpaceWebViewFragment : Fragment() {
 
     private val binding by lazy { FragmentYouthSpaceWebViewBinding.inflate(layoutInflater) }
-    val viewModel: YouthSpaceViewModel by activityViewModels()
+    val viewModel: YouthSpaceInfoViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
