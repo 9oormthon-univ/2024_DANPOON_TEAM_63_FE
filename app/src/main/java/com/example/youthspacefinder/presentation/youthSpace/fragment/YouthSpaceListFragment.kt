@@ -112,10 +112,10 @@ class YouthSpaceListFragment : Fragment() {
             binding.ivAuthentication.visibility = View.VISIBLE
             binding.ivBookmark.visibility = View.GONE
         }
-        networking()
+        spaceListNetworking()
     }
 
-    private fun networking() {
+    private fun spaceListNetworking() {
         RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
             apiKey = Utils.YOUTH_OPEN_API_KEY
         ).enqueue(object : Callback<SpacesInfoResponse> {
@@ -125,8 +125,11 @@ class YouthSpaceListFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val data = response.body()!!.youthSpaces
+                    val filterData = data.filter {
+                        it.spcName != "LH남부권주거복지지사" && it.spcName != "2030청년창업지원센터"
+                    }
                     binding.recyclerview.adapter = YouthSpaceListAdapter(
-                        data,
+                        filterData,
                         requireContext(),
                         youthSpaceInfoViewModel,
                         youthSpaceFavoritesViewModel,
