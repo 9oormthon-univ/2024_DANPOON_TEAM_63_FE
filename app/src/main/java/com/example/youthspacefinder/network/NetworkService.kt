@@ -28,7 +28,9 @@ interface NetworkService {
     fun getYouthSpaceList(
         @Query("openApiVlak") apiKey: String,
         @Query("srchAreaCpvn") cityCode: String = "", // 시,도 코드
-        @Query("srchAreaSggn") areaCode: String = "" // 시,군,구 코드 → 사용자가 입력을 안할 경우를 생각해서 기본값 설정
+        @Query("srchAreaSggn") areaCode: String = "", // 시,군,구 코드 → 사용자가 입력을 안할 경우를 생각해서 기본값 설정
+        @Query("srchSpcId") spaceId: String = "",
+        @Query("pageType") pageType: Int = 1
     ): Call<SpacesInfoResponse>
 
     @GET("api/search-food")
