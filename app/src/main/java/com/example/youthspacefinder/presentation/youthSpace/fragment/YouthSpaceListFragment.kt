@@ -60,13 +60,11 @@ class YouthSpaceListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("list fragment","onCreateView")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("list fragment","onViewCreated")
         setupListeners()
         initView()
         initSearchView()
@@ -77,24 +75,25 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun bookmarkNetworking() {
-        if(youthSpaceFavoritesViewModel.userFavoriteSpaceIds.isNotEmpty()) {
+        if (youthSpaceFavoritesViewModel.userFavoriteSpaceIds.isNotEmpty()) {
             // 즐겨찾기한 북마크가 하나라도 있는 경우
             youthSpaceFavoritesViewModel.userFavoriteSpaceIds.forEach { spaceId ->
                 RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
                     apiKey = Utils.YOUTH_OPEN_API_KEY,
                     spaceId = spaceId.toString(),
                     pageType = 2 // 상세 화면
-                ).enqueue(object: Callback<SpacesInfoResponse> {
+                ).enqueue(object : Callback<SpacesInfoResponse> {
                     override fun onResponse(
                         call: Call<SpacesInfoResponse>,
                         response: Response<SpacesInfoResponse>
                     ) {
-                        if(response.isSuccessful) {
+                        if (response.isSuccessful) {
                             val response = response.body()!!
                             val bookmarkSpace = response.youthSpaces.first()
                             youthSpaceFavoritesViewModel.userFavoriteSpaces.add(bookmarkSpace)
                         }
                     }
+
                     override fun onFailure(call: Call<SpacesInfoResponse>, t: Throwable) {
                         TODO("Not yet implemented")
                     }
@@ -107,8 +106,7 @@ class YouthSpaceListFragment : Fragment() {
         if (authenticationViewModel.isUserLoggedIn) {
             binding.ivAuthentication.visibility = View.GONE
             binding.ivBookmark.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             binding.ivAuthentication.visibility = View.VISIBLE
             binding.ivBookmark.visibility = View.GONE
         }

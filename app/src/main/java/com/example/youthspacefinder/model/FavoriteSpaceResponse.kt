@@ -1,6 +1,8 @@
 package com.example.youthspacefinder.model
 
+import com.google.gson.annotations.SerializedName
+
 data class FavoriteSpaceResponse(
     val username: String,
-    val favoriteSpaces: ArrayList<Long>
+    @SerializedName("favoriteSpaces") val favoriteSpaceIds: ArrayList<Long>
 )

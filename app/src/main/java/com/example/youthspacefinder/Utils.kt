@@ -1,9 +1,6 @@
 package com.example.youthspacefinder
 
-import com.example.youthspacefinder.model.UserReviewInfo
 import com.kakao.vectormap.label.LabelStyle
-import com.kakao.vectormap.label.LabelStyles
-import com.kakao.vectormap.label.LabelTextStyle
 
 object Utils {
     const val YOUTH_OPEN_API_KEY = BuildConfig.YOUTH_OPEN_API_KEY
@@ -346,15 +343,31 @@ object Utils {
         R.drawable.image_space_17,
         R.drawable.image_space_18,
         R.drawable.image_space_19,
-        R.drawable.image_space_20
+        R.drawable.image_space_20,
+        R.drawable.image_space_21,
+        R.drawable.image_space_22,
+        R.drawable.image_space_23,
+        R.drawable.image_space_24,
+        R.drawable.image_space_25,
+        R.drawable.image_space_26,
+        R.drawable.image_space_27,
+        R.drawable.image_space_28,
+        R.drawable.image_space_29,
+        R.drawable.image_space_30,
+        R.drawable.image_space_31,
+        R.drawable.image_space_32,
+        R.drawable.image_space_33,
+        R.drawable.image_space_34,
+        R.drawable.image_space_35,
+        R.drawable.image_space_36,
+        R.drawable.image_space_37,
+        R.drawable.image_space_38,
+        R.drawable.image_space_39,
+        R.drawable.image_space_40
     )
 
-    val dummyReviews = arrayListOf(
-        UserReviewInfo(nickname = "박래환", dateTime = "2024.11.30 오후 5:09", content = "시설이 깔끔하게 정돈되어있고, 다양한 컨텐츠들이 많아서 또 올 것 같습니다."),
-        UserReviewInfo(nickname = "박세영", dateTime = "2024.12.01 오후 3:29", content = "회의실의 모니터가 있어 회의하기 편리했습니다."),
-        UserReviewInfo(nickname = "이건희", dateTime = "2024.12.02 오후 6:49", content = "커피랑 아이스크림이 맛있었어요."),
-        UserReviewInfo(nickname = "이시은", dateTime = "2024.12.03 오전 10:20", content = "직원이 친절해요 ㅎㅎ")
-    )
+    val TAG_RESTAURANT = "FD6"
+    val TAG_CAFE = "CE7"
 
     fun setPinStyle(isSelected: Boolean): LabelStyle {
         if (isSelected) {

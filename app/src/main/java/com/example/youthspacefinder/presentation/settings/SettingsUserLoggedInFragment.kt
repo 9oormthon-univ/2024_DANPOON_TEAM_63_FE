@@ -1,7 +1,6 @@
 package com.example.youthspacefinder.presentation.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +14,7 @@ import com.example.youthspacefinder.model.UserNicknameRequest
 import com.example.youthspacefinder.model.UserPasswordRequest
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
+import com.example.youthspacefinder.presentation.youthSpace.viewmodel.YouthSpaceFavoritesViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +23,7 @@ class SettingsUserLoggedInFragment : Fragment() {
 
     val binding by lazy { FragmentSettingsUserLoggedInBinding.inflate(layoutInflater) }
     val authenticationViewModel: AuthenticationViewModel by activityViewModels()
+    val youthSpaceFavoritesViewModel: YouthSpaceFavoritesViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,6 +107,8 @@ class SettingsUserLoggedInFragment : Fragment() {
         }
         binding.btnLogout.setOnClickListener {
             authenticationViewModel.isUserLoggedIn = false
+            youthSpaceFavoritesViewModel.userFavoriteSpaceIds.clear()
+            youthSpaceFavoritesViewModel.userFavoriteSpaces.clear()
             Toast.makeText(requireContext(), "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_settingsUserLoggedInFragment_to_youthSpaceListFragment)
         }
