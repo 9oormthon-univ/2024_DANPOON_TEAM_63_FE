@@ -1,8 +1,9 @@
 package com.example.youthspacefinder.network
 
 import AmenitiesResponse
-import PositionResponse
 import FavoriteSpaceRequest
+import PositionResponse
+import ReservationResponse
 import SpacesInfoResponse
 import com.example.youthspacefinder.model.FavoriteSpaceResponse
 import com.example.youthspacefinder.model.LoginUserInfo
@@ -105,4 +106,9 @@ interface NetworkService {
         @Header("Authorization") token: String,
         @Body favoriteSpaceRequest: FavoriteSpaceRequest
     ): Call<Any>
+
+    @GET("api/reservationAddress/get")
+    fun getReservationAddressUrl(
+        @Query("spaceId") spaceId: Long
+    ): Call<List<ReservationResponse>>
 }

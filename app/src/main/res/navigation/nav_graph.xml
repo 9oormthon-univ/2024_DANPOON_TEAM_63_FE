@@ -11,9 +11,6 @@
         android:label="fragment_youth_space_list"
         tools:layout="@layout/fragment_youth_space_list" >
         <action
-            android:id="@+id/action_youthSpaceListFragment_to_spaceReservationFragment"
-            app:destination="@id/spaceReservationFragment" />
-        <action
             android:id="@+id/action_youthSpaceListFragment_to_youthSpaceDetailFragment"
             app:destination="@id/youthSpaceDetailFragment" />
         <action
@@ -31,6 +28,9 @@
         <action
             android:id="@+id/action_youthSpaceListFragment_to_settingsUserLoggedInFragment"
             app:destination="@id/settingsUserLoggedInFragment" />
+        <action
+            android:id="@+id/action_youthSpaceListFragment_to_youthSpaceBookmarkFragment"
+            app:destination="@id/youthSpaceBookmarkFragment" />
     </fragment>
 
     <fragment
@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceReviewFragment"
             app:destination="@id/youthSpaceReviewFragment" />
+        <action
+            android:id="@+id/action_youthSpaceDetailFragment_to_youthSpaceReservationWebViewFragment"
+            app:destination="@id/youthSpaceReservationWebViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/amenitiesListFragment"
@@ -184,6 +187,27 @@
         <action
             android:id="@+id/action_settingsUserLoggedInFragment_to_youthSpaceListFragment"
             app:destination="@id/youthSpaceListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youthSpaceBookmarkFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.fragment.YouthSpaceBookmarkFragment"
+        android:label="fragment_youth_space_bookmark"
+        tools:layout="@layout/fragment_youth_space_bookmark" >
+        <action
+            android:id="@+id/action_youthSpaceBookmarkFragment_to_youthSpaceListFragment"
+            app:destination="@id/youthSpaceListFragment" />
+        <action
+            android:id="@+id/action_youthSpaceBookmarkFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youthSpaceReservationWebViewFragment"
+        android:name="com.example.youthspacefinder.presentation.youthSpace.fragment.YouthSpaceReservationWebViewFragment"
+        android:label="fragment_youth_space_reservation_web_view"
+        tools:layout="@layout/fragment_youth_space_reservation_web_view" >
+        <action
+            android:id="@+id/action_youthSpaceReservationWebViewFragment_to_youthSpaceDetailFragment"
+            app:destination="@id/youthSpaceDetailFragment" />
     </fragment>
 
 </navigation>

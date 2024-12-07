@@ -138,8 +138,11 @@ class YouthSpaceDetailFragment : Fragment() {
         binding.btnSearchSurroundingAmenities.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceKaKaoMapFragment)
         }
-        binding.btnGoToUrl.setOnClickListener {
+        binding.btnGoToHomepageSite.setOnClickListener {
             findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceWebViewFragment)
+        }
+        binding.btnGoToReservationSite.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceDetailFragment_to_youthSpaceReservationWebViewFragment)
         }
 
         binding.ivFavorite.setOnClickListener {

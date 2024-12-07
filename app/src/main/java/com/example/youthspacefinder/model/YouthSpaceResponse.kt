@@ -92,3 +92,8 @@ data class PositionResponse(
 data class FavoriteSpaceRequest(
     val spaceId: Long
 )
+
+data class ReservationResponse(
+    val spaceId: Long,
+    val reservationAddress: String
+)
