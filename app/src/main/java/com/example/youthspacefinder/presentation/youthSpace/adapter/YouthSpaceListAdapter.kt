@@ -53,7 +53,7 @@ class YouthSpaceListAdapter(
         Glide.with(context).load(randomImage).into(holder.spaceImage)
         holder.spaceName.text = youthSpaceItems[position].spcName
         holder.spaceAddress.text = youthSpaceItems[position].address
-        holder.spaceOperateTime.text = youthSpaceItems[position].officeHours
+        if(youthSpaceItems[position].officeHours != "null") holder.spaceOperateTime.text = youthSpaceItems[position].officeHours
 
         val positionSpaceId = youthSpaceItems[position].spcId.toLong()
         if(youthSpaceFavoritesViewModel.userFavoriteSpaceIds?.contains(positionSpaceId) == true) {

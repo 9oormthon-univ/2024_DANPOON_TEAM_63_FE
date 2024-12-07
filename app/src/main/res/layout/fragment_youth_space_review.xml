@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_title"
@@ -41,7 +41,7 @@
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_go_back"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="청년 공간 이름" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -107,6 +107,7 @@
             android:background="#ECF0FF"
             android:orientation="horizontal"
             android:padding="8dp"
+            tools:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -154,19 +155,12 @@
             android:id="@+id/ll_review_loggedOut"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="#ECF0FF"
             android:gravity="center_horizontal"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:layout_width="52dp"
-                android:layout_height="52dp"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_locked_view" />
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -176,6 +170,17 @@
                 android:textColor="#6A6A6A"
                 android:textSize="14sp"
                 android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_go_to_login"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:text="로그인"
+                android:textStyle="bold"
+                android:textColor="@color/primary"
+                android:background="@drawable/bg_login_button"
+                android:backgroundTint="#ECF0FF"
+                android:layout_marginTop="12dp"/>
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

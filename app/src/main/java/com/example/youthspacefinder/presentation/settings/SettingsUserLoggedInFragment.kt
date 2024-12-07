@@ -33,7 +33,12 @@ class SettingsUserLoggedInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
         setupListeners()
+    }
+
+    private fun setupViews() {
+        binding.tvUserEmail.text = authenticationViewModel.email
     }
 
     private fun setupListeners() {
@@ -55,6 +60,7 @@ class SettingsUserLoggedInFragment : Fragment() {
                         if (response.isSuccessful) {
                             Toast.makeText(requireContext(), "닉네임 변경을 완료했습니다!", Toast.LENGTH_SHORT)
                                 .show()
+                            authenticationViewModel.nickname = newUserNickname
                         }
                     }
 
@@ -88,15 +94,12 @@ class SettingsUserLoggedInFragment : Fragment() {
                 ).enqueue(object: Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>) {
                         if(response.isSuccessful) {
-                            Log.d("server response", "successful")
                             authenticationViewModel.password = newPassword
                             Toast.makeText(requireContext(), "비밀번호 변경을 완료했습니다!", Toast.LENGTH_SHORT).show()
                         } else {
-                            Log.d("server response", "else")
                         }
                     }
                     override fun onFailure(call: Call<Any>, t: Throwable) {
-                        Log.d("server response", "failure and message: ${t.message}")
                     }
                 })
             }

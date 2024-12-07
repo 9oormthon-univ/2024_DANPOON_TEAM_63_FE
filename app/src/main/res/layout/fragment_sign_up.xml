@@ -63,7 +63,8 @@
         android:layout_height="60dp"
         android:text="회원가입"
         android:background="@drawable/bg_login_button"
-        android:textColor="#5464AF"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_marginTop="40dp"/>
 

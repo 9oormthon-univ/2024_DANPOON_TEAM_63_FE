@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.youthspacefinder.network.RetrofitInstance
@@ -37,30 +38,34 @@ class ReviewDeleteDialog : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(requireContext())
             .setMessage("작성한 후기를 삭제하시겠습니까?")
-            .setPositiveButton("예") { _, _ ->
-                // 후기 삭제 API 연결
-                RetrofitInstance.networkServiceBackEnd.deleteSpaceReview(
-                    token = authenticationViewModel.userToken!!,
-                    reviewId = reviewId!!
-                ).enqueue(object:
-                    Callback<Any> {
-                    override fun onResponse(call: Call<Any>, response: Response<Any>) {
-                        if(response.isSuccessful) {
-                            reviewItemListener?.onReviewItemDeleted(reviewId!!)
-                        }
-                        else {
-                            Log.d("else", "다른 유저가 쓴 글은 삭제하지 못합니다.") // toast 메세지로 띄우기..?
-                        }
-                    }
-                    override fun onFailure(call: Call<Any>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-                })
-            }
-            .setNegativeButton("아니요") { _, _ ->
-                dismiss()
-            }
+            .setPositiveButton("예", null)
+            .setNegativeButton("아니요") { _, _ -> dismiss() }
             .create()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val dialog = dialog as? AlertDialog
+        dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+            // 후기 삭제 API 연결
+            RetrofitInstance.networkServiceBackEnd.deleteSpaceReview(
+                token = authenticationViewModel.userToken!!,
+                reviewId = reviewId!!
+            ).enqueue(object : Callback<Any> {
+                override fun onResponse(call: Call<Any>, response: Response<Any>) {
+                    if (response.isSuccessful) {
+                        reviewItemListener?.onReviewItemDeleted(reviewId!!)
+                        dismiss()
+                    } else {
+                        Toast.makeText(requireContext(), "다른 사람의 후기는 수정하지 못합니다!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    Toast.makeText(requireContext(), "다른 사람의 후기는 수정하지 못합니다!", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     companion object {

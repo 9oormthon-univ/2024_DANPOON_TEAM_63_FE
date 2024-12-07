@@ -20,7 +20,9 @@ data class LoginUserInfo(
 )
 
 data class UserTokenResponse(
-    val token: String
+    val token: String,
+    val nickname: String,
+    val email: String
 )
 
 data class UserNicknameRequest(

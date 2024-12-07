@@ -1,17 +1,16 @@
 package com.example.youthspacefinder.presentation.authentication.fragment
 
-import RegisterUserInfo
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.youthspacefinder.R
 import com.example.youthspacefinder.databinding.FragmentSignUpBinding
+import com.example.youthspacefinder.model.RegisterUserInfo
 import com.example.youthspacefinder.network.RetrofitInstance
 import com.example.youthspacefinder.presentation.authentication.viewmodel.AuthenticationViewModel
 import retrofit2.Call
@@ -21,7 +20,7 @@ import retrofit2.Response
 class SignUpFragment : Fragment() {
 
     val binding by lazy { FragmentSignUpBinding.inflate(layoutInflater) }
-    val viewModel: AuthenticationViewModel by activityViewModels()
+    val authenticationViewModel: AuthenticationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,21 +53,18 @@ class SignUpFragment : Fragment() {
                 RetrofitInstance.networkServiceBackEnd.registerUserInfo(requestBody).enqueue(object: Callback<Any> {
                     override fun onResponse(call: Call<Any>, response: Response<Any>) {
                         if(response.isSuccessful) {
-                            Log.d("server response", "successful")
                             Toast.makeText(requireContext(), "회원가입이 완료되었습니다!", Toast.LENGTH_SHORT).show()
-                            viewModel.id = username
-                            viewModel.password = password
+                            authenticationViewModel.id = username
+                            authenticationViewModel.password = password
                             findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
                         } else {
                             // 여기에 걸림
-                            Log.d("server response", "else")
-                            Log.d("server response", response.message())
+                            Toast.makeText(requireContext(), "중복된 아이디가 있습니다!", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<Any>, t: Throwable) {
-                        Log.d("server response", "onFailure")
-                        Log.d("server response", "${t.message}")
+                        Toast.makeText(requireContext(), "네트워크 연결이 불안정합니다!", Toast.LENGTH_SHORT).show()
                     }
                 })
             }

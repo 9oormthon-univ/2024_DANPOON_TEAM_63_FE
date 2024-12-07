@@ -36,7 +36,30 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="16dp"
+        tools:visibility="gone"
         tools:listitem="@layout/item_youth_space"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
+    <LinearLayout
+        android:id="@+id/ll_bookmark_empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="140dp"
+            android:src="@drawable/ic_alert" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="즐겨찾기가 없습니다.\n 즐겨찾기를 추가 해 주세요."
+            android:textAlignment="center"
+            android:textColor="#4F4F4F" />
+    </LinearLayout>
 </LinearLayout>

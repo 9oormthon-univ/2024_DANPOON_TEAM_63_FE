@@ -55,7 +55,7 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
             binding.llReviewLoggedIn.visibility = View.GONE
             binding.llReviewLoggedOut.visibility = View.VISIBLE
         }
-        binding.tvNickname.text = authenticationViewModel.id
+        binding.tvNickname.text = authenticationViewModel.nickname
         networking()
     }
 
@@ -77,7 +77,8 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
                             binding.recyclerview.adapter = YouthSpaceReviewAdapter(
                                 userReviews,
                                 requireContext(),
-                                this@YouthSpaceReviewFragment
+                                this@YouthSpaceReviewFragment,
+                                authenticationViewModel
                             )
                         }
                     } else {
@@ -117,6 +118,7 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
                                 val newReview = response.body()
                                 Toast.makeText(requireContext(), "후기가 등록되었습니다!", Toast.LENGTH_SHORT)
                                     .show()
+                                Log.d("date", newReview?.updateAt!!)
                                 binding.etWriteComment.setText("")
                                 userReviews.add(newReview!!)
                                 val newReviewPosition = userReviews.size - 1
@@ -138,6 +140,9 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
                 }
             }
         })
+        binding.btnGoToLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_youthSpaceReviewFragment_to_loginFragment)
+        }
     }
 
     override fun onReviewOptionDeleteClicked(reviewId: Long) {
@@ -147,8 +152,8 @@ class YouthSpaceReviewFragment : Fragment(), OnReviewItemListener {
         )
     }
 
-    override fun onReviewOptionModifyClicked(reviewId: Long) {
-        val reviewModifyDialog = ReviewModifyDialog.newInstance(reviewId)
+    override fun onReviewOptionModifyClicked(reviewId: Long, reviewContent: String) {
+        val reviewModifyDialog = ReviewModifyDialog.newInstance(reviewId, reviewContent)
         reviewModifyDialog.show(
             childFragmentManager, ReviewModifyDialog.DIALOG_TAG
         )

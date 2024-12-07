@@ -23,7 +23,7 @@ import retrofit2.Response
 class LoginFragment : Fragment() {
 
     val binding by lazy { FragmentLoginBinding.inflate(layoutInflater) }
-    val viewModel: AuthenticationViewModel by activityViewModels()
+    val authenticationViewModel: AuthenticationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +39,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun initView() {
-        val id = viewModel.id
-        val password = viewModel.password
+        val id = authenticationViewModel.id
+        val password = authenticationViewModel.password
         // UX 관점에서 더 좋을 것 같음
         if(id.isNotBlank() && password.isNotBlank()) {
             binding.etId.setText(id, TextView.BufferType.EDITABLE)
@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        binding.tvSignUp.setOnClickListener {
+        binding.btnSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
         binding.btnLogin.setOnClickListener {
@@ -63,14 +63,15 @@ class LoginFragment : Fragment() {
                     Callback<UserTokenResponse> {
                     override fun onResponse(call: Call<UserTokenResponse>, response: Response<UserTokenResponse>) {
                         if(response.isSuccessful) {
-                            val userToken = response.body()!!.token
-//                            val sharedPreference = requireActivity().getSharedPreferences("user_info", Context.MODE_PRIVATE)
-//                            val editor = sharedPreference.edit() // 언제 쓰지?
-//                            editor.putString("current_login_user_token", userToken)
-//                            editor.commit()
-                            viewModel.isUserLoggedIn = true
-                            viewModel.userToken = "Bearer $userToken"
-                            Log.d("token", viewModel.userToken!!)
+                            val response = response.body()
+                            val userToken = response!!.token
+                            authenticationViewModel.id = id
+                            authenticationViewModel.isUserLoggedIn = true
+                            authenticationViewModel.userToken = "Bearer $userToken"
+                            authenticationViewModel.password = password
+                            authenticationViewModel.nickname = response.nickname
+                            authenticationViewModel.email = response.email
+                            Log.d("token", authenticationViewModel.userToken!!)
                             Toast.makeText(requireContext(), "환영합니다!", Toast.LENGTH_SHORT).show() // nickname 님 환영합니다 가 더 나을 수도?
                             findNavController().navigate(R.id.action_loginFragment_to_youthSpaceListFragment)
                         } else {
