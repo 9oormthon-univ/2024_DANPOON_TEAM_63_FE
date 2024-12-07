@@ -32,6 +32,28 @@ class YouthSpaceListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("list fragment","onCreate")
+        if (authenticationViewModel.isUserLoggedIn) {
+            // 로그인 상태일 때 해당 유저가 추가한 청년공간 즐겨찾기 리스트 조회하기
+            RetrofitInstance.networkServiceBackEnd.getFavoriteSpaceList(
+                token = authenticationViewModel.userToken!!
+            ).enqueue(object : Callback<FavoriteSpaceResponse> {
+                override fun onResponse(
+                    call: Call<FavoriteSpaceResponse>,
+                    response: Response<FavoriteSpaceResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val response = response.body()
+                        val favoriteSpaceIds = response?.favoriteSpaceIds
+                        youthSpaceFavoritesViewModel.userFavoriteSpaceIds = favoriteSpaceIds!! // 앱 내 변동되기 전 즐겨찾기 id들
+                        bookmarkNetworking()
+                    }
+                }
+                override fun onFailure(call: Call<FavoriteSpaceResponse>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
     }
 
     override fun onCreateView(
@@ -52,7 +74,33 @@ class YouthSpaceListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        Log.d("list fragment","onResume")
+    }
+
+    private fun bookmarkNetworking() {
+        if(youthSpaceFavoritesViewModel.userFavoriteSpaceIds.isNotEmpty()) {
+            // 즐겨찾기한 북마크가 하나라도 있는 경우
+            youthSpaceFavoritesViewModel.userFavoriteSpaceIds.forEach { spaceId ->
+                RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
+                    apiKey = Utils.YOUTH_OPEN_API_KEY,
+                    spaceId = spaceId.toString(),
+                    pageType = 2 // 상세 화면
+                ).enqueue(object: Callback<SpacesInfoResponse> {
+                    override fun onResponse(
+                        call: Call<SpacesInfoResponse>,
+                        response: Response<SpacesInfoResponse>
+                    ) {
+                        if(response.isSuccessful) {
+                            val response = response.body()!!
+                            val bookmarkSpace = response.youthSpaces.first()
+                            youthSpaceFavoritesViewModel.userFavoriteSpaces.add(bookmarkSpace)
+                        }
+                    }
+                    override fun onFailure(call: Call<SpacesInfoResponse>, t: Throwable) {
+                        TODO("Not yet implemented")
+                    }
+                })
+            }
+        }
     }
 
     private fun initView() {
@@ -68,28 +116,6 @@ class YouthSpaceListFragment : Fragment() {
     }
 
     private fun networking() {
-        if (authenticationViewModel.isUserLoggedIn) {
-            // 로그인 상태일 때 해당 유저가 추가한 청년공간 즐겨찾기 리스트 조회하기
-            RetrofitInstance.networkServiceBackEnd.getFavoriteSpaceList(
-                token = authenticationViewModel.userToken!!
-            ).enqueue(object : Callback<FavoriteSpaceResponse> {
-                override fun onResponse(
-                    call: Call<FavoriteSpaceResponse>,
-                    response: Response<FavoriteSpaceResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val response = response.body()
-                        val favoriteSpaceIds = response?.favoriteSpaceIds
-                        youthSpaceFavoritesViewModel.userFavoriteSpaceIds = favoriteSpaceIds
-                    }
-                }
-
-                override fun onFailure(call: Call<FavoriteSpaceResponse>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-        }
         RetrofitInstance.networkServiceOpenAPI.getYouthSpaceList(
             apiKey = Utils.YOUTH_OPEN_API_KEY
         ).enqueue(object : Callback<SpacesInfoResponse> {
